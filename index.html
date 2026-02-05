@@ -185,7 +185,7 @@
     <section id="blackbox">
       <h3>Harpo: The Black-Box Framework</h3>
       <p>
-  Harpo is a quantitative evaluator. It takes two JSON inputs—<code>paper.json</code> (a paper-specific checklist filled by the evaluator) and <code>weight.json</code> (fixed criterion weights)—and outputs normalized scores in <code>[0, 1]</code> for Privacy, Utility, and Safety. The criteria are derived from the literature and cover: privacy mechanisms and guarantees, attacker modeling and temporal aspects, utility reporting and validation, and safety verification/constraints/resilience. While this SoK focuses on DP, Harpo is designed as a flexible black-box that can be reused beyond DP to compare privacy approaches under CPS constraints.
+  Harpo is a quantitative evaluator. It takes two JSON inputs—<code>paper.json</code> (a paper-specific checklist filled by the evaluator) and <code>weight.json</code> (fixed criterion weights)—and outputs scores in <code>[0, 1]</code> for Privacy, Utility, and Safety. The criteria are derived from the literature and cover: privacy mechanisms and guarantees, attacker modeling and temporal aspects, utility reporting and validation, and safety verification/constraints/resilience. While this SoK focuses on DP, Harpo is designed as a flexible black-box that can be reused beyond DP to compare privacy approaches under CPS constraints.
 </p>
 
 
@@ -350,7 +350,7 @@
 
     <figure class="code-card">
       <figcaption>
-        <strong>Example Output (Normalized)</strong>
+        <strong>Example Output</strong>
         <button class="copy-btn" type="button">Copy</button>
       </figcaption>
       <pre><code>{
@@ -423,7 +423,7 @@
 
       <h4>3D Landscape Visualization</h4>
       <p>
-  The interactive 3D plot summarizes the reviewed papers in the Privacy–Utility–Safety space. Each point corresponds to one paper and is positioned by its normalized scores; hovering over a point reveals the exact Privacy, Utility, and Safety values. Color encodes the Safety score (blue = low safety contribution, yellow = higher safety contribution), making it easy to see that only a small subset of studies performs strongly across all three dimensions. This visualization reinforces our main takeaway: most work optimizes privacy (and often utility), but the simultaneous balance with safety remains rare.
+  The interactive 3D plot summarizes the reviewed papers in the Privacy–Utility–Safety space. Each point corresponds to one paper and is positioned by its scores; hovering over a point reveals the exact Privacy, Utility, and Safety values. Color encodes the Safety score (blue = low safety contribution, yellow = higher safety contribution), making it easy to see that only a small subset of studies performs strongly across all three dimensions. This visualization reinforces our main takeaway: most work optimizes privacy (and often utility), but the simultaneous balance with safety remains rare.
 </p>
 
       
