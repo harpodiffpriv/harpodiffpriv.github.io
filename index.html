@@ -160,30 +160,36 @@
   </div>
 </section>
 
-
-      Main Evaluation Function
-
-      
-def main(answers_file, weights_file):
-    answers, weights = load(answers_file), load(weights_file)
-    result = {}
-    for cat in ["Privacy", "Utility", "Safety"]:
+    <div class="code-grid">
+    <figure class="code-card">
+      <figcaption>
+        <strong>Main Evaluation Function</strong>
+        <button class="copy-btn" type="button">Copy</button>
+      </figcaption>
+      <pre><code>
+        def main(answers_file, weights_file):
+        answers, weights = load(answers_file), load(weights_file)
+        result = {}
+        for cat in ["Privacy", "Utility", "Safety"]:
         a = answers.get(cat, {})
         w = weights.get(cat, {})
         result[cat] = round(compute_score(a, w), 3)
-    print(json.dumps(result, indent=2))
-      
-    
-    
-      Example Output
+        print(json.dumps(result, indent=2))
+    </code></pre>
+    </figure>
 
-      
-{
-  "Privacy": 0.82,
-  "Utility": 0.76,
-  "Safety": 0.68
-}
-  
+    <figure class="code-card">
+      <figcaption>
+        <strong>Example Output (Normalized)</strong>
+        <button class="copy-btn" type="button">Copy</button>
+      </figcaption>
+      <pre><code>{
+  "Privacy": 0.820,
+  "Utility": 0.760,
+  "Safety": 0.680
+}</code></pre>
+</figure>
+</div>
 
     <section id="results">
       <h3>Systematic Evaluation Results</h3>
