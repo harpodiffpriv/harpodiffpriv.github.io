@@ -241,6 +241,34 @@
     </figure>
   </div>
 </section>
+<style>
+  .code-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+    align-items:start;
+  }
+  @media (max-width: 800px){
+    .code-grid{ grid-template-columns:1fr; }
+  }
+  .code-card{
+    border:1px solid #e6e7eb; border-radius:12px; overflow:hidden;
+    background:#fafafa;
+  }
+  .code-card figcaption{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 12px; background:#fff; border-bottom:1px solid #e6e7eb;
+    font-family:system-ui, Arial, sans-serif; font-size:14px;
+  }
+  .copy-btn{
+    border:1px solid #d0d2d7; background:#f6f7f9; padding:4px 10px;
+    border-radius:8px; cursor:pointer; font-size:12px;
+  }
+  .copy-btn:hover{ background:#eef0f4; }
+  .code-card pre{
+    margin:0; padding:12px; max-height:360px; overflow:auto;
+    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    white-space:pre; background:#fafafa;
+  }
+</style>
 
     <div class="code-grid">
     <figure class="code-card">
