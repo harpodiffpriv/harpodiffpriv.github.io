@@ -242,17 +242,30 @@
   </div>
 </section>
 <style>
-  .code-grid{
-    display:grid; grid-template-columns:1fr 1fr; gap:16px;
-    align-items:start;
-  }
-  @media (max-width: 800px){
+  .code-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  align-items:stretch; 
+}
+@media (max-width: 800px){
     .code-grid{ grid-template-columns:1fr; }
   }
-  .code-card{
-    border:1px solid #e6e7eb; border-radius:12px; overflow:hidden;
-    background:#fafafa;
-  }
+.code-card{
+  border:1px solid #e6e7eb; border-radius:12px; overflow:hidden;
+  background:#fafafa;
+
+  display:flex;               
+  flex-direction:column;
+  height:320px;              
+}
+
+.code-card pre{
+  margin:0; padding:12px;
+  flex:1;                     
+  overflow:auto;              
+  max-height:none;            
+  font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  white-space:pre; background:#fafafa;
+}
   .code-card figcaption{
     display:flex; justify-content:space-between; align-items:center;
     padding:10px 12px; background:#fff; border-bottom:1px solid #e6e7eb;
