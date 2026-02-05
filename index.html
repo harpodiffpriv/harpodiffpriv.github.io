@@ -3,318 +3,175 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
   <title>SoK Artifacts | Harpo Framework</title>
-  
   <meta name="description" content="Landing page for SoK: A Practical Black-Box Framework for Evaluating Differential Privacy in Cyber-Physical Systems." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>" />
   
   <style>
-    /* === MODERN VARIABLES === */
     :root {
-      --bg: #ffffff;
-      --fg: #1a202c;
-      --muted: #64748b;
-      --primary: #0f172a; /* Dark Slate */
-      --accent: #2563eb;  /* Royal Blue */
-      --card-bg: #f8fafc;
-      --border: #e2e8f0;
-      --code-bg: #1e293b;
-      --code-fg: #e2e8f0;
+      --bg: #ffffff; --fg: #1a202c; --muted: #64748b;
+      --primary: #0f172a; --accent: #2563eb;
+      --card-bg: #f8fafc; --border: #e2e8f0;
+      --code-bg: #1e293b; --code-fg: #e2e8f0;
       --success: #10b981;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0f172a;
-        --fg: #f1f5f9;
-        --muted: #94a3b8;
-        --primary: #f8fafc;
-        --accent: #3b82f6;
-        --card-bg: #1e293b;
-        --border: #334155;
+        --bg: #0f172a; --fg: #f1f5f9; --muted: #94a3b8;
+        --primary: #f8fafc; --accent: #3b82f6;
+        --card-bg: #1e293b; --border: #334155;
         --code-bg: #020617;
       }
     }
 
-    /* === RESET & BASE === */
     html { scroll-behavior: smooth; }
     * { box-sizing: border-box; }
     
     body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--fg);
+      margin: 0; background: var(--bg); color: var(--fg);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
     }
 
     a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
     a:hover { text-decoration: underline; }
-    
     .container { max-width: 1024px; margin: 0 auto; padding: 0 20px; }
 
-    /* === HEADER & NAV === */
+    /* --- TEXT ADJUSTMENT (JUSTIFY) --- */
+    p { 
+      margin-bottom: 16px; 
+      max-width: 80ch; 
+      text-align: justify; 
+      hyphens: auto; 
+      word-spacing: -0.02em;
+    }
+
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: color-mix(in srgb, var(--bg) 90%, transparent);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 0;
+      backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 12px 0;
     }
     
     .brand { font-weight: 700; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
-    /* === HERO SECTION === */
     .hero { padding: 60px 0 40px; text-align: center; }
-    .hero h1 { 
-      font-size: clamp(24px, 4vw, 36px); 
-      margin: 0 0 16px; 
-      color: var(--primary); 
-      line-height: 1.2;
-    }
-    .hero p { color: var(--muted); max-width: 800px; margin: 0 auto 24px; }
+    .hero h1 { font-size: clamp(24px, 4vw, 36px); margin: 0 0 16px; color: var(--primary); line-height: 1.2; }
+    .hero p { margin: 0 auto 24px; text-align: center; color: var(--muted); }
     
     .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: var(--primary);
-      color: var(--bg); /* Inverted text */
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 15px;
-      text-decoration: none;
-      transition: opacity 0.2s;
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
+      background: var(--primary); color: var(--bg); border-radius: 6px;
+      font-weight: 600; font-size: 15px; transition: opacity 0.2s;
     }
-    .btn:hover { opacity: 0.9; text-decoration: none; }
-    .btn svg { width: 18px; height: 18px; fill: currentColor; }
+    .btn:hover { opacity: 0.9; }
 
-    /* === SECTIONS === */
     section { padding: 40px 0; border-top: 1px solid var(--border); }
     section:first-of-type { border-top: none; }
-    
     h2 { font-size: 24px; margin: 0 0 20px; color: var(--primary); }
-    h3 { font-size: 18px; margin: 24px 0 12px; color: var(--fg); }
-    
-    p { margin-bottom: 16px; max-width: 75ch; text-align: justify; hyphens: auto;}
-    
-    /* === CODE CARDS === */
-    .code-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 24px;
-    }
-    
-    .code-card {
-      margin: 0;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .code-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
-      background: color-mix(in srgb, var(--card-bg) 95%, black);
-      font-size: 13px;
-      font-weight: 600;
-      font-family: monospace;
-    }
-    
-    .copy-btn {
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 11px;
-      padding: 2px 8px;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-    .copy-btn:hover { background: var(--bg); color: var(--accent); }
-    
-    pre {
-      margin: 0;
-      padding: 16px;
-      background: var(--code-bg);
-      color: var(--code-fg);
-      overflow-x: auto;
-      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
-      font-size: 13px;
-      flex-grow: 1;
-    }
 
-    /* === TABLE STYLES === */
-    .table-wrapper {
-      max-height: 500px;
-      overflow-y: auto;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    }
+    .code-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-top: 24px; }
+    .code-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+    .code-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--card-bg) 95%, black); font-size: 13px; font-weight: 600; font-family: monospace; }
+    .copy-btn { background: transparent; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; font-size: 11px; padding: 2px 8px; color: var(--muted); }
     
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      text-align: left;
-    }
-    
-    th {
-      position: sticky;
-      top: 0;
-      background: var(--card-bg);
-      padding: 12px 16px;
-      font-weight: 600;
-      border-bottom: 2px solid var(--border);
-      cursor: pointer; /* Indicates sortable */
-      user-select: none;
-      z-index: 10;
-    }
-    
-    th:hover { background: var(--border); }
-    th::after { content: ' ↕'; font-size: 10px; opacity: 0.5; }
-    
-    td {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      font-variant-numeric: tabular-nums;
-    }
-    
-    tr:hover td { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+    pre { margin: 0; padding: 16px; background: var(--code-bg); color: var(--code-fg); overflow-x: auto; font-family: "JetBrains Mono", monospace; font-size: 12px; flex-grow: 1; }
 
-    /* Score Colors for Table */
-    .score-high { color: var(--success); font-weight: 600; }
-    .score-low { opacity: 0.6; }
+    .table-wrapper { max-height: 500px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+    th { position: sticky; top: 0; background: var(--card-bg); padding: 12px 16px; font-weight: 600; border-bottom: 2px solid var(--border); cursor: pointer; z-index: 10; }
+    td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+    tr:hover td { background: color-mix(in srgb, var(--accent) 5%, transparent); }
 
-    /* === 3D PLOT CONTAINER === */
-    .full-bleed {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-top: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-    
+    .full-bleed { width: 100%; aspect-ratio: 16/9; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; margin-top: 20px; overflow: hidden; }
     .full-bleed iframe { width: 100%; height: 100%; border: none; }
 
-    /* === FOOTER === */
-    footer {
-      margin-top: 60px;
-      padding: 40px 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-    }
+    footer { margin-top: 60px; padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 14px; }
   </style>
 </head>
 <body>
 
   <div class="topbar">
-    <div class="container">
-      <div class="brand">
-        Artifact Submission
-      </div>
-    </div>
+    <div class="container"><div class="brand">Artifact Submission</div></div>
   </div>
 
   <header class="container hero">
     <h1>SoK: A Practical Black-Box Framework for Evaluating Differential Privacy in Cyber-Physical Systems</h1>
-    
-    <p>
-      We present a systematization of knowledge (SoK) and a "black-box" scoring framework, Harpo, that quantitatively evaluates papers in this domain along three dimensions: privacy, utility, and safety. We survey and classify the work into three categories ("Type of Data Protected", "Application Domain" and "Where Noise is Added"). We then present insights on how the criteria are obtained and demonstrate how to use our Harpo framework to score papers. Our findings reveal clear patterns, e.g., papers that emphasize privacy mechanisms largely overlap with utility techniques, while safety is neglected in much of the privacy-focused CPS literature. This imbalance highlights the need for a cross-dimensional approach in the design of privacy and safety in future CPS.
-    </p>
-
-    <a class="btn" href="https://github.com/harpodiffpriv" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-      View Artifacts on GitHub
-    </a>
+    <p>We present a systematization of knowledge (SoK) and a "black-box" scoring framework, Harpo, that quantitatively evaluates papers in this domain along three dimensions: privacy, utility, and safety. Our findings reveal clear patterns, highlighting the need for a cross-dimensional approach in future CPS design.</p>
+    <a class="btn" href="https://github.com/harpodiffpriv" target="_blank">View Artifacts on GitHub</a>
   </header>
 
   <main class="container">
-    
     <section id="intro">
       <h2>Introduction</h2> 
-      <p>
-        Privacy has become increasingly important due to the rapid development of autonomous systems (AS) and cyber-physical systems (CPS)[cite: 14]. These systems are used in critical applications such as industrial control and healthcare, raising concerns about the privacy of sensitive data like task execution times and sensor readings[cite: 15, 16].
-      </p>
-      <p>
-        Differential Privacy (DP) is a promising method for protecting privacy in these systems[cite: 17]. However, integrating DP into safety-critical real-time systems poses challenges, as privacy mechanisms must not only preserve data but also maintain the system's safety and utility [cite: 18-20].
-      </p>
+      <p>Privacy has become increasingly important due to the rapid development of autonomous systems (AS) and cyber-physical systems (CPS). These systems are used in critical applications such as industrial control and healthcare, raising concerns about the privacy of sensitive data like task execution times and sensor readings. Differential Privacy (DP) techniques have become contenders to improve both the privacy and security of such systems, yet a comprehensive framework for evaluation is still lacking.</p>
     </section>
 
     <section id="blackbox">
-      <h2>The "Harpo" Black Box Framework</h2>
-      <p>
-        We propose a framework, <strong>Harpo</strong>, that functions as a black box[cite: 8]. It accepts a research paper (represented as a JSON configuration) as input and produces normalized scores for three key metrics.
-      </p>
+      <h2>Weight Configuration Schema</h2>
+      <p>The Harpo framework utilizes a weight configuration file to define the importance of various technical factors across Privacy, Utility, and Safety. Below is the exact schema used for our scoring calculations:</p>
 
       <div class="code-grid">
         <figure class="code-card">
-          <div class="code-header">
-            <span>metrics.json (Schema)</span>
-            <button class="copy-btn">Copy</button>
-          </div>
+          <div class="code-header"><span>metrics.json (Exact Data)</span><button class="copy-btn">Copy</button></div>
           <pre><code>{
   "Privacy": {
-    "P1a": false, "P1b": false, "P1c": false,
-    "P2": false,
-    "P3a": true, "P3b": true, "P3c": false,
-    "P4a": false, "P4b": false,
-    "P5": false, "P6": false
+    "P1a: Privacy Mechanism, Mention of Mechanism": 0.1,
+    "P1b: Privacy Mechanism, Mechanism Description": 0.1,
+    "P1c: Privacy Mechanism, Evidence or Implementation": 0.1,
+    "P2: Formal Guarantees (Explicit parameters)": 0.1,
+    "P3a: Attacker Modeling, Mention of Adversary": 0.05,
+    "P3b: Attacker Modeling, Capabilities Defined": 0.1,
+    "P3c: Attacker Modeling, Formal Modeling / Mathematical Representation": 0.05,
+    "P4a: Temporal Privacy, Mention of Temporal Aspects": 0.05,
+    "P4b: Temporal Privacy, Composition Formally Analyzed": 0.05,
+    "P5: Hybrid or Multi-Layer Privacy": 0.1,
+    "P6: Data Coverage (trajectory, control, ID, etc.)": 0.2
   },
   "Utility": {
-    "U1a": false, "U1b": false,
-    "U2a": false, "U2b": false,
-    "U3a": true, "U3b": true,
-    "U4a": true, "U4b": true,
-    "U5a": true, "U5b": false
+    "U1a: Accuracy Reporting, Mention of Metrics": 0.1,
+    "U1b: Accuracy Reporting, Results Provided": 0.1,
+    "U2a: Baseline Comparison, Baseline Identification": 0.1,
+    "U2b: Baseline Comparison, Quantitative Comparison": 0.1,
+    "U3a: Robustness Analysis, Test Scenarios Defined": 0.1,
+    "U3b: Robustness Analysis, Results Analyzed": 0.1,
+    "U4a: Real-System Validation, System Description": 0.1,
+    "U4b: Real-System Validation, Validation Evidence": 0.1,
+    "U5a: Generalization, Multiple Scenarios/Datasets": 0.1,
+    "U5b: Generalization, Generalization Results": 0.1
   },
   "Safety": {
-    "S1a": true, "S1b": true, "S1c": true,
-    "S2a": false, "S2b": false,
-    "S3a": true, "S3b": true,
-    "S4a": true, "S4b": true,
-    "S5a": true, "S5b": true,
-    "S6a": false, "S6b": false
+    "S1a: Formal Safety Verification, Method Mention": 0.1,
+    "S1b: Formal Safety Verification, Application Described": 0.1,
+    "S1c: Formal Safety Verification, Results Provided": 0.1,
+    "S2a: Safety Constraints, Constraints Defined": 0.1,
+    "S2b: Safety Constraints, Integration Shown": 0.05,
+    "S3a: Adversarial Safety Resilience, Adversarial Scenarios": 0.1,
+    "S3b: Adversarial Safety Resilience, Resilience Tested": 0.05,
+    "S4a: Scenario-Based Validation, Scenarios Described": 0.1,
+    "S4b: Scenario-Based Validation, Validation Results": 0.1,
+    "S5a: Real-Time Safety Modeling, RT Modeling": 0.05,
+    "S5b: Real-Time Safety Modeling, Scalability & Physical Link": 0.05,
+    "S6a: Ethics Regulatory Safety Integration, Explicit Compliance/Ethics Modeling with Safety Linkage": 0.05,
+    "S6b: Ethics Regulatory Safety Integration, Link to Safety": 0.05
   }
 }</code></pre>
         </figure>
 
         <figure class="code-card">
-          <div class="code-header">
-            <span>Evaluation Logic (Python)</span>
-            <button class="copy-btn">Copy</button>
-          </div>
+          <div class="code-header"><span>Evaluation Logic (Simplified)</span><button class="copy-btn">Copy</button></div>
           <pre><code>def compute_score(paper_json, weights_json):
     result = {}
     for axis in ["Privacy", "Utility", "Safety"]:
         score = 0
-        axis_data = paper_json.get(axis, {})
-        axis_weights = weights_json.get(axis, {})
+        factors = paper_json.get(axis, {})
+        weights = weights_json.get(axis, {})
         
-        # Sum weights for all True factors
-        for key, is_true in axis_data.items():
-            if is_true:
-                score += axis_weights.get(key, 0)
+        for key, is_present in factors.items():
+            if is_present:
+                score += weights.get(key, 0)
                 
-        result[axis] = round(score, 2)
+        result[axis] = round(score, 3)
     return result</code></pre>
         </figure>
       </div>
@@ -322,12 +179,7 @@
 
     <section id="results">
       <h2>Evaluation Results</h2>
-      <p>
-        We evaluated 60 references using this framework. The quantitative results are summarized below.
-        <br>
-        <small style="color:var(--muted)">* Click table headers to sort by score.</small>
-      </p>
-
+      <p>The following table presents the evaluation of selected references. Our scoring reveals that while privacy and utility are often addressed together, safety remains a critical but frequently overlooked dimension in CPS literature.</p>
       <div class="table-wrapper">
         <table id="resultsTable">
           <thead>
@@ -342,43 +194,10 @@
             <tr><td>[45]</td><td>0.6</td><td>0.9</td><td>0</td></tr>
             <tr><td>[62]</td><td>0.9</td><td>0.8</td><td>0</td></tr>
             <tr><td>[57, 70]</td><td>0.8</td><td>1</td><td>0</td></tr>
-            <tr><td>[43]</td><td>0.65</td><td>0.6</td><td>0</td></tr>
-            <tr><td>[19, 49]</td><td>0.6</td><td>0.4</td><td>0</td></tr>
             <tr><td>[68]</td><td>0.85</td><td>0.6</td><td>0.8</td></tr>
-            <tr><td>[39]</td><td>0.45</td><td>0.7</td><td>0</td></tr>
-            <tr><td>[35]</td><td>0.75</td><td>0.7</td><td>0.65</td></tr>
-            <tr><td>[61]</td><td>0.35</td><td>0.2</td><td>0</td></tr>
-            <tr><td>[1]</td><td>0.9</td><td>0.7</td><td>0</td></tr>
-            <tr><td>[28]</td><td>0.1</td><td>0.2</td><td>0</td></tr>
-            <tr><td>[8]</td><td>0.9</td><td>0.4</td><td>0.5</td></tr>
-            <tr><td>[75]</td><td>0.5</td><td>0.8</td><td>0</td></tr>
-            <tr><td>[41]</td><td>0.55</td><td>0.4</td><td>0</td></tr>
-            <tr><td>[36, 58]</td><td>0.75</td><td>0.9</td><td>0</td></tr>
-            <tr><td>[54]</td><td>0.75</td><td>0.6</td><td>0.4</td></tr>
-            <tr><td>[11]</td><td>0.7</td><td>0.8</td><td>0</td></tr>
-            <tr><td>[34]</td><td>0.65</td><td>0.6</td><td>0.45</td></tr>
             <tr><td>[21]</td><td>0.95</td><td>0.8</td><td>0.5</td></tr>
-            <tr><td>[42]</td><td>0.7</td><td>0.4</td><td>0.5</td></tr>
-            <tr><td>[20]</td><td>0.55</td><td>0.2</td><td>0.25</td></tr>
-            <tr><td>[32]</td><td>0.7</td><td>0.4</td><td>0</td></tr>
-            <tr><td>[64]</td><td>0.7</td><td>0.7</td><td>0</td></tr>
-            <tr><td>[69]</td><td>0.55</td><td>0.4</td><td>0.25</td></tr>
-            <tr><td>[71]</td><td>0.65</td><td>0.7</td><td>0</td></tr>
-            <tr><td>[63]</td><td>0.8</td><td>0.6</td><td>0.3</td></tr>
-            <tr><td>[60]</td><td>0.65</td><td>0.4</td><td>0</td></tr>
-            <tr><td>[66]</td><td>0.1</td><td>0.1</td><td>0</td></tr>
-            <tr><td>[30, 55, 72, 73]</td><td>0.65</td><td>0.2</td><td>0</td></tr>
-            <tr><td>[74]</td><td>0.3</td><td>0.7</td><td>0</td></tr>
-            <tr><td>[13]</td><td>0.4</td><td>0.5</td><td>0</td></tr>
-            <tr><td>[38]</td><td>0.45</td><td>0.2</td><td>0</td></tr>
-            <tr><td>[2]</td><td>0.35</td><td>0.4</td><td>0.2</td></tr>
-            <tr><td>[33]</td><td>0.9</td><td>0.4</td><td>0.75</td></tr>
-            <tr><td>[67]</td><td>0.35</td><td>0.4</td><td>0.35</td></tr>
-            <tr><td>[29]</td><td>0.75</td><td>0.9</td><td>0.45</td></tr>
-            <tr><td>[4]</td><td>0.8</td><td>1</td><td>0.6</td></tr>
-            <tr><td>[40]</td><td>0.5</td><td>0.4</td><td>0</td></tr>
-            <tr><td>[17]</td><td>0.85</td><td>0.5</td><td>0.6</td></tr>
             <tr><td>[14]</td><td>0.95</td><td>0.4</td><td>0.75</td></tr>
+            <tr><td>[4]</td><td>0.8</td><td>1</td><td>0.6</td></tr>
           </tbody>
         </table>
       </div>
@@ -386,107 +205,44 @@
 
     <section id="visualization">
       <h2>3D Visual Analysis</h2>
-      <p>
-        The interactive plot below visualizes the relationship between the three metrics. The colors represent the <strong>Safety</strong> score (blue = low, yellow = high).
-      </p>
-      <p>
-        As seen in the distribution, few studies achieve high performance in all three indicators simultaneously. Most research optimizes for only two dimensions (e.g., Privacy and Utility), highlighting a gap in the current literature regarding Safety[cite: 393, 394].
-      </p>
-
+      <p>To better understand the current landscape, we visualize the papers in a 3D coordinate system. This interactive plot allows researchers to see the "gap" in the literature—specifically the lack of papers in the high-safety, high-utility, and high-privacy corner.</p>
       <div class="full-bleed">
-        <iframe src="3d.html" title="3D Plot of Paper Scores" loading="lazy"></iframe>
+        <iframe src="3d.html" title="3D Plot" loading="lazy"></iframe>
       </div>
     </section>
-
-    <section id="conclusion">
-      <h2>Conclusion</h2>
-      <p>
-        We propose a Systematization of Knowledge (SoK) on applying differential privacy (DP) in cyber-physical and autonomous systems, along with Harpo, a practical black-box evaluation framework. 
-      </p>
-      <p>
-        Applying Harpo reveals a consistent pattern: most papers focus on privacy mechanisms and their utility impact but ignore safety as a first-class dimension[cite: 422]. In many studies, "safety" effectively means closed-loop stability under privacy noise, not an explicit physical-risk notion[cite: 424]. 
-      </p>
-      <p>
-        This work highlights the need for a cross-dimensional view that explicitly evaluates safety under constraints, adversarial settings, and real-time behavior[cite: 427].
-      </p>
-    </section>
-
   </main>
 
   <footer>
-    <div class="container">
-      &copy; <span id="year"></span> 
-      SoK Artifacts | Harpo Framework
-    </div>
+    <div class="container">&copy; <span id="year"></span> SoK Artifacts | Harpo Framework</div>
   </footer>
 
   <script>
-    // 1. Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // 2. Fetch JSON for code snippets (Optional)
-    document.querySelectorAll('.code-card[data-src]').forEach(async card => {
-      const src = card.getAttribute('data-src');
-      const codeEl = card.querySelector('pre > code');
-      try {
-        const res = await fetch(src);
-        if(!res.ok) throw new Error("404");
-        const json = await res.json();
-        codeEl.textContent = JSON.stringify(json, null, 2);
-      } catch (e) {
-        // Keep default content if fetch fails
-        console.warn("Could not fetch live JSON", e);
-      }
-    });
-
-    // 3. Copy Button Logic
     document.querySelectorAll('.copy-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const code = btn.closest('.code-card').querySelector('pre > code').textContent;
         navigator.clipboard.writeText(code);
-        const originalText = btn.textContent;
         btn.textContent = 'Copied!';
-        setTimeout(() => (btn.textContent = originalText), 1500);
+        setTimeout(() => (btn.textContent = 'Copy'), 1500);
       });
     });
 
-    // 4. Table Sorting Logic
     function sortTable(n) {
       const table = document.getElementById("resultsTable");
       let rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-      switching = true;
-      dir = "asc"; 
-      
+      switching = true; dir = "asc"; 
       while (switching) {
-        switching = false;
-        rows = table.rows;
+        switching = false; rows = table.rows;
         for (i = 1; i < (rows.length - 1); i++) {
           shouldSwitch = false;
           x = rows[i].getElementsByTagName("TD")[n];
           y = rows[i + 1].getElementsByTagName("TD")[n];
-          
-          let xContent = x.innerText.replace(/[\[\]]/g, ''); 
-          let yContent = y.innerText.replace(/[\[\]]/g, '');
-          
-          let xVal = isNaN(parseFloat(xContent)) ? xContent.toLowerCase() : parseFloat(xContent);
-          let yVal = isNaN(parseFloat(yContent)) ? yContent.toLowerCase() : parseFloat(yContent);
-
-          if (dir == "asc") {
-            if (xVal > yVal) { shouldSwitch = true; break; }
-          } else if (dir == "desc") {
-            if (xVal < yVal) { shouldSwitch = true; break; }
-          }
+          let xV = isNaN(parseFloat(x.innerText)) ? x.innerText.toLowerCase() : parseFloat(x.innerText);
+          let yV = isNaN(parseFloat(y.innerText)) ? y.innerText.toLowerCase() : parseFloat(y.innerText);
+          if (dir == "asc" ? xV > yV : xV < yV) { shouldSwitch = true; break; }
         }
-        if (shouldSwitch) {
-          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-          switching = true;
-          switchcount ++; 
-        } else {
-          if (switchcount == 0 && dir == "asc") {
-            dir = "desc";
-            switching = true;
-          }
-        }
+        if (shouldSwitch) { rows[i].parentNode.insertBefore(rows[i + 1], rows[i]); switching = true; switchcount ++; }
+        else if (switchcount == 0 && dir == "asc") { dir = "desc"; switching = true; }
       }
     }
   </script>
