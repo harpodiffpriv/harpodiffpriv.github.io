@@ -181,9 +181,13 @@
 </p>
     </section>
   <section id="method">
-      <h3>Method overview.</h3
   <p>
- To build the surveyed set, we performed a structured literature search using common DP-in-CPS/AS keywords across major academic indexing sources, followed by screening to retain papers that apply DP (or DP-like mechanisms) in cyber-physical or autonomous settings. We excluded papers that were purely theoretical without CPS/AS context or that did not provide a DP mechanism relevant to our scope. The Harpo rubric parameters were derived from recurring evaluation dimensions in the literature and refined into a fixed checklist that can be applied consistently across papers. Full methodological details are described in the paper, and the complete artifacts are available on GitHub.
+We initially surveyed works using the keywords differential privacy in CPS, with the expectation that privacy mechanisms would also interact with system safety. However, we observed that the majority of existing CPS-DP papers are primarily privacy-oriented, focusing on protecting personal or sensitive data \eg locations, trajectories or measurements. In these papers, differential privacy is applied at the data or model-sharing level and utility is typically evaluated through accuracy or performance degradation, while safety is neither explicitly modeled nor evaluated. This absence is not accidental: in most of these studies, DP mechanisms do not interact with control inputs, actuation or physical system dynamics and therefore safety is effectively out of scope. 
+
+We then thought that if differential privacy noise is injected into control signals, state estimation, timing or other components that directly affect the physical behavior of the system, then safety might be considered in the evaluation. To some extent, this was true. But what we were actually interested in was physical safety, while in the CPS privacy literature, safety is not usually defined in terms of physical risks such as collisions or accidents.
+When we reviewed papers that inject noise into the control system, we observed that safety is defined as closed-loop stability or bounded physical deviation under privacy noise. That is, the system is considered “safe” as long as the injected privacy noise does not make the system unstable or cause unbounded tracking error, even if no explicit physical risk or hazard analysis is done.
+
+However, we observed that a recurring pattern emerges in the existing literature: most studies prioritize privacy and utility (\eg accuracy, estimation error or learning performance), while safety is entirely absent from their evaluations. and even in the few papers that inject differential privacy noise into the control loop, safety is treated as a control-theoretic property (stability or boundedness) rather than as a physical-world risk metric tied to collisions, violations or unsafe system states.
 </p>
   </section>
     <section id="blackbox">
