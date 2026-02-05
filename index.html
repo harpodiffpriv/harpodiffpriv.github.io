@@ -57,6 +57,33 @@
     }
     .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
 
+    .btn-github{
+  background:#000;
+  color:#fff;
+  border-color:#000;
+
+  display:inline-flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+
+  padding:10px 16px;
+  white-space:nowrap;
+}
+
+.btn-github:hover{
+  background:#111;
+  border-color:#111;
+}
+
+.gh-icon{
+  width:16px;
+  height:16px;
+  display:inline-block;
+  flex:0 0 auto;
+}
+
     /* Sections */
     section { padding: 60px 0; border-top: 1px solid var(--border); }
     h3 { font-size: 28px; margin: 0 0 20px; color: var(--fg); }
@@ -287,11 +314,6 @@
     border-radius:8px; cursor:pointer; font-size:12px;
   }
   .copy-btn:hover{ background:#eef0f4; }
-  .code-card pre{
-    margin:0; padding:12px; max-height:360px; overflow:auto;
-    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    white-space:pre; background:#fafafa;
-  }
 </style>
 
     <div class="code-grid">
