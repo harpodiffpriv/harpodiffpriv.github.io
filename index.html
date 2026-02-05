@@ -329,6 +329,9 @@
   }
   .copy-btn:hover{ background:#eef0f4; }
 </style>
+<p>
+  The two following panels illustrate how Harpo produces a final score from the inputs. The left panel shows the main evaluation: it loads a paper-specific checklist (<code>paper.json</code>) and the fixed criterion weights (<code>weight.json</code>), then computes a score for each dimension (Privacy, Utility and Safety). The right panel shows an example output, where each dimension is reported as a number in <code>[0,1]</code>. All source code, scripts, and artifacts needed to reproduce these results are available in our GitHub repository.
+</p>
 
     <div class="code-grid">
     <figure class="code-card">
@@ -337,13 +340,13 @@
         <button class="copy-btn" type="button">Copy</button>
       </figcaption>
       <pre><code>
-        def main(answers_file, weights_file):
-        answers, weights = load(answers_file), load(weights_file)
+        def main(paper_file, weights_file):
+        answers, weights = load(paper_file), load(weights_file)
         result = {}
         for cat in ["Privacy", "Utility", "Safety"]:
-        a = answers.get(cat, {})
+        p = paper.get(cat, {})
         w = weights.get(cat, {})
-        result[cat] = round(compute_score(a, w), 3)
+        result[cat] = round(compute_score(p, w), 3)
         print(json.dumps(result, indent=2))
     </code></pre>
     </figure>
@@ -354,15 +357,15 @@
         <button class="copy-btn" type="button">Copy</button>
       </figcaption>
       <pre><code>{
-  "Privacy": 0.820,
-  "Utility": 0.760,
-  "Safety": 0.680
+  "Privacy": 0.8,
+  "Utility": 0.7,
+  "Safety": 0.6
 }</code></pre>
 </figure>
 </div>
 
     <section id="results">
-      <h3>Systematic Evaluation Results</h3>
+      <h3>Evaluation Results</h3>
       <p>
         The following table presents the raw evaluation scores for a subset of the ۵۰ reviewed references. These values represent the performance of each paper across the Harpo dimensions.
       </p>
@@ -421,7 +424,7 @@
         </table>
       </div>
 
-      <h4>3D Landscape Visualization</h4>
+      <h4>3D Visualization</h4>
       <p>
   The interactive 3D plot summarizes the reviewed papers in the Privacy–Utility–Safety space. Each point corresponds to one paper and is positioned by its scores; hovering over a point reveals the exact Privacy, Utility, and Safety values. Color encodes the Safety score (blue = low safety contribution, yellow = higher safety contribution), making it easy to see that only a small subset of studies performs strongly across all three dimensions. This visualization reinforces our main takeaway: most work optimizes privacy (and often utility), but the simultaneous balance with safety remains rare.
 </p>
@@ -436,7 +439,7 @@
 
   <footer>
     <div class="container">
-      <p style="text-align: center;">© <span id="year"></span> | SoK: Harpo Framework Artifacts | USENIX Security '26 Submission</p>
+      <p style="text-align: center;">© <span id="year"></span> | SoK: Harpo Framework Artifacts | USENIX Security '26 </p>
     </div>
   </footer>
 
