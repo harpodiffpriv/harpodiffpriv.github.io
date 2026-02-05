@@ -145,9 +145,21 @@
 
   <header class="container hero">
     <h2>SoK: A Practical Black-Box Framework for Evaluating Differential Privacy in Cyber-Physical Systems</h2>
-    <p>
-      Differential Privacy (DP) techniques have become contenders to improve both the privacy and security of Cyber-Physical Systems (CPS). However, comparing research outcomes remains a challenge due to variations in system design and the lack of a comprehensive framework for evaluation. We present <strong>Harpo</strong>, a black-box scoring framework that quantitatively evaluates research along three dimensions: privacy, utility, and safety.
-    </p>
+<p>
+  Privacy has recently become an important tool to protect sensitive information in cyber-physical and autonomous systems.
+  Differential Privacy (DP) techniques have become contenders to improve both the <em>privacy</em> and <em>security</em> of such systems.
+  However, comparing research outcomes remains a challenge due to (i) variations in the design of cyber-physical systems (CPS),
+  (ii) the existence of different DP techniques, and (iii) the lack of a comprehensive framework for evaluation.
+  Prior work usually focuses on high-level taxonomies for privacy at large in CPS.
+</p>
+<p>
+  We present a systematization of knowledge (SoK) and a “black-box” scoring framework <strong>Harpo</strong> that quantitatively evaluates papers in this domain along three dimensions:
+  <em>privacy</em>, <em>utility</em>, and <em>safety</em>.
+  We survey and classify the work into three categories (“Type of Data Protected”, “Application Domain”, and “Where Noise is Added”),
+  then explain how our criteria are obtained and demonstrate how to use Harpo to score papers.
+  Our findings reveal a clear pattern: papers that emphasize privacy mechanisms largely overlap with utility techniques, while safety is neglected in much of the privacy-focused CPS literature.
+  This imbalance highlights the need for a cross-dimensional approach when designing privacy and safety for future CPS.
+</p>
     <div class="cta">
       <a class="btn btn-github" href="https://github.com/harpodiffpriv" target="_blank" rel="noopener">
   <svg class="gh-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -165,15 +177,17 @@
     <section id="intro">
       <h3>Introduction</h3>
       <p>
-        Integrating DP into safety-critical real-time systems poses unique challenges, as privacy mechanisms must not only preserve data but also maintain the system's physical safety and operational utility. This systematization of knowledge (SoK) classifies work into three categories: "Type of Data Protected", "Application Domain", and "Where Noise is Added". Our findings reveal that safety is frequently neglected in privacy-focused CPS literature, highlighting a critical need for the cross-dimensional approach implemented in the Harpo framework.
-      </p>
+  Integrating DP into safety-critical real-time CPS introduces constraints that go beyond standard privacy–utility trade-offs. In these systems, privacy mechanisms must preserve sensitive data while maintaining operational utility and physical safety (e.g., task deadlines, control stability, and safety constraints). Prior surveys provide valuable taxonomies, but they typically emphasize privacy and discuss utility mostly as accuracy degradation, while safety is often treated implicitly. Harpo addresses this gap by providing a consistent, quantitative evaluation that highlights where safety-aware privacy is still missing.
+</p>
+
     </section>
 
     <section id="blackbox">
       <h3>Harpo: The Black-Box Framework</h3>
       <p>
-        Harpo functions as a quantitative evaluator. It accepts a <code>paper.json</code> (the artifact being tested) and a <code>weight.json</code> (our standardized criteria) to produce normalized scores <code>[0, 1]</code> for Privacy, Utility, and Safety.
-      </p>
+  Harpo is a quantitative evaluator. It takes two JSON inputs—<code>paper.json</code> (a paper-specific checklist filled by the evaluator) and <code>weight.json</code> (fixed criterion weights)—and outputs normalized scores in <code>[0, 1]</code> for Privacy, Utility, and Safety. The criteria are derived from the literature and cover: privacy mechanisms and guarantees, attacker modeling and temporal aspects, utility reporting and validation, and safety verification/constraints/resilience. While this SoK focuses on DP, Harpo is designed as a flexible black-box that can be reused beyond DP to compare privacy approaches under CPS constraints.
+</p>
+
 
 <div class="code-grid">
     <figure class="code-card" data-src="https://raw.githubusercontent.com/harpodiffpriv/sok/main/paper.json">
@@ -350,7 +364,7 @@
     <section id="results">
       <h3>Systematic Evaluation Results</h3>
       <p>
-        The following table presents the raw evaluation scores for a subset of the 60 reviewed references. These values represent the normalized performance of each paper across the Harpo dimensions.
+        The following table presents the raw evaluation scores for a subset of the ۵۰ reviewed references. These values represent the performance of each paper across the Harpo dimensions.
       </p>
 
       <div class="table-container">
@@ -409,8 +423,9 @@
 
       <h4>3D Landscape Visualization</h4>
       <p>
-        The interactive 3D plot visualizes the distribution of the 60 surveyed papers. Each point represents a study. The color gradient (Dark to Light) represents the aggregate "Harpo Score." As observed, very few studies occupy the "Safety-Privacy" corner, mathematically confirming the research gap our SoK identifies.
-      </p>
+  The interactive 3D plot summarizes the reviewed papers in the Privacy–Utility–Safety space. Each point corresponds to one paper and is positioned by its normalized scores; hovering over a point reveals the exact Privacy, Utility, and Safety values. Color encodes the Safety score (blue = low safety contribution, yellow = higher safety contribution), making it easy to see that only a small subset of studies performs strongly across all three dimensions. This visualization reinforces our main takeaway: most work optimizes privacy (and often utility), but the simultaneous balance with safety remains rare.
+</p>
+
       
       <div class="full-bleed">
         <iframe src="3d.html" title="3D Visualization of Harpo Scores" loading="lazy"></iframe>
