@@ -1,519 +1,271 @@
-
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>USENIX Security '26</title>
-  <meta name="description" content="Landing page for paper artifacts." />
-  <link rel="icon" href="data:," />
-  <style>
-    /* === ORIGINAL STYLE (kept) === */
-    :root{
-      --bg:#ffffff; --fg:#111418; --muted:#667085; --card:#f7f7f9; --border:#e6e7eb; --accent:#0b5fff;
-      --link:#0b5fff; --link-visited:#6e59ff; --code:#0f172a; --code-bg:#f4f6ff;
-    }
-    @media (prefers-color-scheme: dark){
-      :root{
-        --bg:#0b0c0f; --fg:#eef1f6; --muted:#aab3c5; --card:#14161b; --border:#242731; --accent:#7aa2ff;
-        --link:#7aa2ff; --link-visited:#a491ff; --code:#e2e8f0; --code-bg:#0f1320;
-      }
-    }
-    html{scroll-behavior:smooth}
-    *{box-sizing:border-box}
-    body{margin:0; background: #f7f8fa; color:#222; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,"Noto Sans",sans-serif}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>USENIX Security '26 | Harpo Artifacts</title>
+  <meta name="description" content="Landing page for SoK: A Practical Black-Box Framework for Evaluating Differential Privacy in Cyber-Physical Systems." />
+  
+  <style>
+    :root {
+      --bg:#ffffff; --fg:#111418; --muted:#667085; --card:#f7f7f9; --border:#e6e7eb; --accent:#0b5fff;
+      --link:#0b5fff; --link-visited:#6e59ff; --code:#e2e8f0; --code-bg:#0f172a;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:#0b0c0f; --fg:#eef1f6; --muted:#aab3c5; --card:#14161b; --border:#242731; --accent:#7aa2ff;
+        --link:#7aa2ff; --link-visited:#a491ff;
+      }
+    }
 
-    a{color:var(--link)} a:visited{color:var(--link-visited)}
-    .container{max-width:1440px; margin:0 auto; padding:0 8px}
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; }
+    body { 
+      margin: 0; 
+      background: var(--bg); 
+      color: var(--fg); 
+      font: 16px/1.6 system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-    /* Top bar (kept minimal; no right buttons/section links) */
-    .topbar{position:sticky; top:0; z-index:50; backdrop-filter:saturate(140%) blur(6px); background:color-mix(in srgb, var(--bg) 88%, transparent); border-bottom:1px solid var(--border)}
-    .nav{display:flex; align-items:center; gap:16px; padding:10px 0}
-    .brand{display:flex; align-items:baseline; gap:10px}
-    .brand h1{font-size:20px; margin:0}
-    .brand .sub{font-size:14px; color:var(--muted)}
-    .spacer{flex:1}
+    /* Layout - Using full width as requested */
+    .container { 
+      max-width: 1440px; 
+      margin: 0 auto; 
+      padding: 0 40px; /* Increased padding for better alignment */
+    }
 
-    /* Buttons */
-    .btn{display:inline-block; padding:.6rem 1rem; border:1px solid var(--border); border-radius:999px; text-decoration:none; color:var(--fg); background:var(--card); font-weight:600}
-    .btn:hover{border-color:var(--accent)}
-    .cta{display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin-top:1rem}
+    /* Top Bar */
+    .topbar { 
+      position: sticky; top: 0; z-index: 50; 
+      backdrop-filter: blur(8px); 
+      background: color-mix(in srgb, var(--bg) 90%, transparent); 
+      border-bottom: 1px solid var(--border); 
+    }
+    .nav { display: flex; align-items: center; padding: 12px 0; }
+    .brand h1 { font-size: 18px; margin: 0; font-weight: 700; letter-spacing: -0.02em; }
 
-    /* Hero */
-    .hero{padding:36px 0 18px; text-align:center}
-    .hero h2{margin:0 0 8px; font-size:28px}
-    .hero p{margin:0; color:var(--muted)}
+    /* Hero */
+    .hero { padding: 80px 0 40px; text-align: center; }
+    .hero h2 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; color: var(--fg); }
+    .hero p { max-width: 900px; margin: 0 auto 30px; color: var(--muted); font-size: 18px; text-align: justify; }
 
-    /* Sections */
-    section{padding:28px 0; border-top:1px solid var(--border)}
-    section:first-of-type{border-top:none}
-    h3{font-size:24px; margin:0 0 12px}
+    .btn { 
+      display: inline-block; padding: 12px 24px; border: 1px solid var(--border); 
+      border-radius: 8px; text-decoration: none; color: var(--fg); 
+      background: var(--card); font-weight: 600; transition: all 0.2s;
+    }
+    .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
 
-    /* Optional helpers retained */
-    .grid{display:grid; gap:16px}
-    @media (min-width: 900px){ .grid.two{grid-template-columns: 1fr 1fr} }
-    .card{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px}
-    pre{background:var(--code-bg); color:var(--code); padding:12px 14px; border-radius:12px; overflow:auto; border:1px solid var(--border)}
-    code{font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,Monaco,monospace; font-size: .95em}
+    /* Sections */
+    section { padding: 60px 0; border-top: 1px solid var(--border); }
+    h3 { font-size: 28px; margin: 0 0 20px; color: var(--fg); }
+    h4 { font-size: 20px; margin: 30px 0 15px; }
+    p { margin-bottom: 20px; text-align: justify; hyphens: auto; }
 
-    /* Footer */
-    footer{padding:24px 0 48px; color:var(--muted); text-align:center; border-top:1px solid var(--border)}
-  </style>
+    /* Code & Logic Blocks */
+    .code-container { display: flex; gap: 24px; margin: 30px 0; }
+    figure.code-box { 
+      flex: 1; background: var(--card); border: 1px solid var(--border); 
+      border-radius: 12px; margin: 0; overflow: hidden; 
+    }
+    figcaption { 
+      padding: 10px 16px; background: color-mix(in srgb, var(--card) 90%, black); 
+      font-weight: 600; font-size: 14px; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between;
+    }
+    pre { margin: 0; padding: 20px; overflow-x: auto; background: var(--code-bg); color: var(--code); }
+    code { font-family: "JetBrains Mono", monospace; font-size: 13px; }
+
+    /* Results Table */
+    .table-container { 
+      max-height: 600px; overflow-y: auto; 
+      border: 1px solid var(--border); border-radius: 12px; 
+      margin-top: 20px; background: var(--bg);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    th { 
+      position: sticky; top: 0; background: var(--card); 
+      padding: 16px; text-align: left; border-bottom: 2px solid var(--border); 
+      z-index: 10;
+    }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: color-mix(in srgb, var(--accent) 5%, transparent); }
+
+    /* 3D Visualization */
+    .full-bleed { 
+      width: 100%; aspect-ratio: 16/9; 
+      border: 1px solid var(--border); border-radius: 14px; 
+      overflow: hidden; margin: 40px 0; 
+    }
+    iframe { width: 100%; height: 100%; border: 0; }
+
+    footer { padding: 60px 0; text-align: center; color: var(--muted); border-top: 1px solid var(--border); }
+
+    @media (max-width: 900px) {
+      .code-container { flex-direction: column; }
+      .container { padding: 0 20px; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Minimal top bar: only brand, no right-side blue button, no section links -->
-  <div class="topbar">
-    <div class="container nav">
-      <div class="brand">
-        <h1>47th IEEE Symposium on Security and Privacy</h1>
-      </div>
-      <div class="spacer"></div>
-    </div>
-  </div>
 
-  <!-- Title page + two buttons underneath -->
-  <header class="container hero">
-    <h2>SoK: A Practical Black-Box Framework for Evaluating Differential Privacy in Cyber-Physical Systems</h2>
-    <p></p>
-    <div class="cta">
-      <a class="btn" href="https://github.com/paper-repo/sok" target="_blank" rel="noopener">View on GitHub</a>
-    </div>
-  </header>
+  <div class="topbar">
+    <div class="container nav">
+      <div class="brand"><h1>USENIX Security '26 Artifacts</h1></div>
+    </div>
+  </div>
 
-  <main class="container">
-    <section id="intro">
-      <h3>Introduction</h3> 
-       <p style="text-align: justify;">
-      In this study, a comprehensive systematization of knowledge (SoK) in the field of privacy in cyber-physical systems (CPS) and autonomous systems (AS) is presented, with a special focus on methods based on differential privacy.
-      This page provides an overview of our proposed approach and the main results of our study. 
-      </p>
-    </section>
+  <header class="container hero">
+    <h2>SoK: A Practical Black-Box Framework for Evaluating Differential Privacy in Cyber-Physical Systems</h2>
+    <p>
+      Differential Privacy (DP) techniques have become contenders to improve both the privacy and security of Cyber-Physical Systems (CPS). However, comparing research outcomes remains a challenge due to variations in system design and the lack of a comprehensive framework for evaluation. We present <strong>Harpo</strong>, a black-box scoring framework that quantitatively evaluates research along three dimensions: privacy, utility, and safety.
+    </p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/harpodiffpriv" target="_blank">View Artifacts on GitHub</a>
+    </div>
+  </header>
 
-    <section id="blackbox">
-      <h3>Black Box Framework</h3>
-      <p style="text-align: justify;">
-      We propose a framework that works as a <strong>black box</strong>, taking a research paper as input and producing three output scores for three key metrics:
-      <strong>Privacy</strong>, <strong>Safety</strong>, and <strong>Utility</strong>.
-      </p>
-      <p style="text-align: justify;">
-      Each metric is divided into several factors representing both technical depth and practical relevance. 
-      The scoring is additive, and each factor has a fixed weight, giving a final normalized value between <code>[0, 1]</code>.
-      </p>
+  <main class="container">
+    
+    <section id="intro">
+      <h3>Introduction</h3>
+      <p>
+        Integrating DP into safety-critical real-time systems poses unique challenges, as privacy mechanisms must not only preserve data but also maintain the system's physical safety and operational utility. This systematization of knowledge (SoK) classifies work into three categories: "Type of Data Protected", "Application Domain", and "Where Noise is Added". Our findings reveal that safety is frequently neglected in privacy-focused CPS literature, highlighting a critical need for the cross-dimensional approach implemented in the Harpo framework.
+      </p>
+    </section>
 
-      <h4>Inside the Black Box</h4>
-      <p style="text-align: justify;">
-        A Python-based evaluation code is executed inside the black box. The code takes two JSON files as input:
-      </p>
-      <ul>
-        <li><strong>Weight file</strong> :a predefined JSON file containing fixed weights for all evaluation factors, designed by us.</li>
-        <li><strong>Paper file</strong> :a customizable JSON file filled by the evaluator, indicating which factors are true/false by the target paper.</li>
-      </ul>
+    <section id="blackbox">
+      <h3>Harpo: The Black-Box Framework</h3>
+      <p>
+        Harpo functions as a quantitative evaluator. It accepts a <code>paper.json</code> (the artifact being tested) and a <code>weight.json</code> (our standardized criteria) to produce normalized scores <code>[0, 1]</code> for Privacy, Utility, and Safety.
+      </p>
 
-      
-  <div class="code-grid">
-    <figure class="code-card" data-src="https://raw.githubusercontent.com/paper-repo/sok/main/paper.json">
-      <figcaption>
-        <strong>metrics.json</strong>
-        <button class="copy-btn" type="button">Copy</button>
-      </figcaption>
-      <pre><code>{ "example": "metrics content will load..." }</code></pre>
-    </figure>
+<div class="code-grid">
+    <figure class="code-card" data-src="https://raw.githubusercontent.com/paper-repo/sok/main/paper.json">
+      <figcaption>
+        <strong>metrics.json</strong>
+        <button class="copy-btn" type="button">Copy</button>
+      </figcaption>
+      <pre><code>{ "example": "metrics content will load..." }</code></pre>
+    </figure>
 
-    <figure class="code-card" data-src="https://raw.githubusercontent.com/paper-repo/sok/main/weight.json">
-      <figcaption>
-        <strong>weights.json</strong>
-        <button class="copy-btn" type="button">Copy</button>
-      </figcaption>
-      <pre><code>{ "example": "weights content will load..." }</code></pre>
-    </figure>
-  </div>
+    <figure class="code-card" data-src="https://raw.githubusercontent.com/paper-repo/sok/main/weight.json">
+      <figcaption>
+        <strong>weights.json</strong>
+        <button class="copy-btn" type="button">Copy</button>
+      </figcaption>
+      <pre><code>{ "example": "weights content will load..." }</code></pre>
+    </figure>
+  </div>
 </section>
 
-<style>
-  .code-grid{
-    display:grid; grid-template-columns:1fr 1fr; gap:16px;
-    align-items:start;
-  }
-  @media (max-width: 800px){
-    .code-grid{ grid-template-columns:1fr; }
-  }
-  .code-card{
-    border:1px solid #e6e7eb; border-radius:12px; overflow:hidden;
-    background:#fafafa;
-  }
-  .code-card figcaption{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:10px 12px; background:#fff; border-bottom:1px solid #e6e7eb;
-    font-family:system-ui, Arial, sans-serif; font-size:14px;
-  }
-  .copy-btn{
-    border:1px solid #d0d2d7; background:#f6f7f9; padding:4px 10px;
-    border-radius:8px; cursor:pointer; font-size:12px;
-  }
-  .copy-btn:hover{ background:#eef0f4; }
-  .code-card pre{
-    margin:0; padding:12px; max-height:360px; overflow:auto;
-    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    white-space:pre; background:#fafafa;
-  }
-</style>
 
-<script>
-// Pretty-print each JSON card by fetching its data-src
-document.querySelectorAll('.code-card').forEach(async card => {
-  const src = card.getAttribute('data-src');
-  const codeEl = card.querySelector('pre > code');
-  try {
-    const res = await fetch(src);
-    const json = await res.json();
-    codeEl.textContent = JSON.stringify(json, null, 2);
-  } catch (e) {
-    // fallback: leave existing content
-    console.warn('Could not load', src, e);
-  }
-});
+      Main Evaluation Function
 
-// Copy button
-document.querySelectorAll('.code-card .copy-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const code = btn.closest('.code-card').querySelector('pre > code').textContent;
-    navigator.clipboard.writeText(code);
-    btn.textContent = 'Copied!';
-    setTimeout(() => (btn.textContent = 'Copy'), 1200);
-  });
-});
-</script>
-
-     <p style="text-align: justify;">
-        When the code runs, it compares the evaluator’s inputs with the weight file. 
-        For every factor marked as <code>true</code>, its corresponding weight is added to the total score. 
-        The sum is a value between <code>0</code> and <code>1</code>, representing the final scores for 
-        <strong>Privacy</strong>, <strong>Safety</strong>, and <strong>Utility</strong> the outputs of the black box.
-      </p>
-    <style>
-    .full-bleed {
-      position: relative;
-      width: 100vw;
-      left: 50%;
-      margin-left: -50vw;
-    
-      aspect-ratio: 16/9;
-      border: 1px solid #e6e7eb;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    
-    .full-bleed iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-    }
-    </style>
-  
-<style>
-  .code-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: nowrap; 
-  }
-
-  figure.code-box {
-    background-color: #f6f8fa;
-    border-radius: 8px;
-    padding: 0;
-    width: 47%;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
-  figcaption {
-    background-color: #eef0f3;
-    font-weight: 600;
-    padding: 8px 12px;
-    font-size: 14px;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-  pre {
-    background: none;
-    margin: 0;
-    padding: 12px;
-    font-size: 14px;
-    line-height: 1.4;
-    overflow-x: auto;
-  }
-
-  code {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
-  }
-
-  @media (max-width: 900px) {
-    .code-container {
-      flex-wrap: wrap; 
-    }
-    figure.code-box {
-      width: 100%;
-    }
-  }
-</style>
-
-
-  <div class="code-container">
-
-    <figure class="code-box">
-      <figcaption>Main Evaluation Function</figcaption>
-      <pre><code class="language-python">
+      
 def main(answers_file, weights_file):
-    answers, weights = load(answers_file), load(weights_file)
-    result = {}
-    for cat in ["Privacy", "Utility", "Safety"]:
-        a = answers.get(cat, {})
-        w = weights.get(cat, {})
-        result[cat] = round(compute_score(a, w), 3)
-    print(json.dumps(result, indent=2))
-      </code></pre>
-    </figure>
+    answers, weights = load(answers_file), load(weights_file)
+    result = {}
+    for cat in ["Privacy", "Utility", "Safety"]:
+        a = answers.get(cat, {})
+        w = weights.get(cat, {})
+        result[cat] = round(compute_score(a, w), 3)
+    print(json.dumps(result, indent=2))
+      
+    
+    
+      Example Output
 
-    <figure class="code-box">
-      <figcaption>Example Output</figcaption>
-      <pre><code class="language-json">
+      
 {
-  "Privacy": 0.82,
-  "Utility": 0.76,
-  "Safety": 0.68
+  "Privacy": 0.82,
+  "Utility": 0.76,
+  "Safety": 0.68
 }
-      </code></pre>
-    </figure>
+  
 
-  </div>
+    <section id="results">
+      <h3>Systematic Evaluation Results</h3>
+      <p>
+        The following table presents the raw evaluation scores for a subset of the 60 reviewed references. These values represent the normalized performance of each paper across the Harpo dimensions.
+      </p>
 
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Privacy Score</th>
+              <th>Utility Score</th>
+              <th>Safety Score</th>
+            </tr>
+          </thead>
+          <tbody>
+           <tr><td>[45]</td><td>0.6</td><td>0.9</td><td>0</td></tr>
+            <tr><td>[62]</td><td>0.9</td><td>0.8</td><td>0</td></tr>
+            <tr><td>[57, 70]</td><td>0.8</td><td>1</td><td>0</td></tr>
+            <tr><td>[43]</td><td>0.65</td><td>0.6</td><td>0</td></tr>
+            <tr><td>[19, 49]</td><td>0.6</td><td>0.4</td><td>0</td></tr>
+            <tr><td>[68]</td><td>0.85</td><td>0.6</td><td>0.8</td></tr>
+            <tr><td>[39]</td><td>0.45</td><td>0.7</td><td>0</td></tr>
+            <tr><td>[35]</td><td>0.75</td><td>0.7</td><td>0.65</td></tr>
+            <tr><td>[61]</td><td>0.35</td><td>0.2</td><td>0</td></tr>
+            <tr><td>[1]</td><td>0.9</td><td>0.7</td><td>0</td></tr>
+            <tr><td>[28]</td><td>0.1</td><td>0.2</td><td>0</td></tr>
+            <tr><td>[8]</td><td>0.9</td><td>0.4</td><td>0.5</td></tr>
+            <tr><td>[75]</td><td>0.5</td><td>0.8</td><td>0</td></tr>
+            <tr><td>[41]</td><td>0.55</td><td>0.4</td><td>0</td></tr>
+            <tr><td>[36, 58]</td><td>0.75</td><td>0.9</td><td>0</td></tr>
+            <tr><td>[54]</td><td>0.75</td><td>0.6</td><td>0.4</td></tr>
+            <tr><td>[11]</td><td>0.7</td><td>0.8</td><td>0</td></tr>
+            <tr><td>[34]</td><td>0.65</td><td>0.6</td><td>0.45</td></tr>
+            <tr><td>[21]</td><td>0.95</td><td>0.8</td><td>0.5</td></tr>
+            <tr><td>[42]</td><td>0.7</td><td>0.4</td><td>0.5</td></tr>
+            <tr><td>[20]</td><td>0.55</td><td>0.2</td><td>0.25</td></tr>
+            <tr><td>[32]</td><td>0.7</td><td>0.4</td><td>0</td></tr>
+            <tr><td>[64]</td><td>0.7</td><td>0.7</td><td>0</td></tr>
+            <tr><td>[69]</td><td>0.55</td><td>0.4</td><td>0.25</td></tr>
+            <tr><td>[71]</td><td>0.65</td><td>0.7</td><td>0</td></tr>
+            <tr><td>[63]</td><td>0.8</td><td>0.6</td><td>0.3</td></tr>
+            <tr><td>[60]</td><td>0.65</td><td>0.4</td><td>0</td></tr>
+            <tr><td>[66]</td><td>0.1</td><td>0.1</td><td>0</td></tr>
+            <tr><td>[30, 55, 72, 73]</td><td>0.65</td><td>0.2</td><td>0</td></tr>
+            <tr><td>[74]</td><td>0.3</td><td>0.7</td><td>0</td></tr>
+            <tr><td>[13]</td><td>0.4</td><td>0.5</td><td>0</td></tr>
+            <tr><td>[38]</td><td>0.45</td><td>0.2</td><td>0</td></tr>
+            <tr><td>[2]</td><td>0.35</td><td>0.4</td><td>0.2</td></tr>
+            <tr><td>[33]</td><td>0.9</td><td>0.4</td><td>0.75</td></tr>
+            <tr><td>[67]</td><td>0.35</td><td>0.4</td><td>0.35</td></tr>
+            <tr><td>[29]</td><td>0.75</td><td>0.9</td><td>0.45</td></tr>
+            <tr><td>[4]</td><td>0.8</td><td>1</td><td>0.6</td></tr>
+            <tr><td>[40]</td><td>0.5</td><td>0.4</td><td>0</td></tr>
+            <tr><td>[17]</td><td>0.85</td><td>0.5</td><td>0.6</td></tr>
+            <tr><td>[14]</td><td>0.95</td><td>0.4</td><td>0.75</td></tr>
+         </tbody>
+        </table>
+      </div>
 
+      <h4>3D Landscape Visualization</h4>
+      <p>
+        The interactive 3D plot visualizes the distribution of the 60 surveyed papers. Each point represents a study. The color gradient (Dark to Light) represents the aggregate "Harpo Score." As observed, very few studies occupy the "Safety-Privacy" corner, mathematically confirming the research gap our SoK identifies.
+      </p>
+      
+      <div class="full-bleed">
+        <iframe src="3d.html" title="3D Visualization of Harpo Scores" loading="lazy"></iframe>
+      </div>
+    </section>
 
-<style>
-  .code-grid{
-    display:grid; grid-template-columns:1fr 1fr; gap:16px;
-    align-items:start;
-  }
-  @media (max-width: 800px){
-    .code-grid{ grid-template-columns:1fr; }
-  }
-  .code-card{
-    border:1px solid #e6e7eb; border-radius:12px; overflow:hidden;
-    background:#fafafa;
-  }
-  .code-card figcaption{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:10px 12px; background:#fff; border-bottom:1px solid #e6e7eb;
-    font-family:system-ui, Arial, sans-serif; font-size:14px;
-  }
-  .copy-btn{
-    border:1px solid #d0d2d7; background:#f6f7f9; padding:4px 10px;
-    border-radius:8px; cursor:pointer; font-size:12px;
-  }
-  .copy-btn:hover{ background:#eef0f4; }
-  .code-card pre{
-    margin:0; padding:12px; max-height:360px; overflow:auto;
-    font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    white-space:pre; background:#fafafa;
-  }
-</style>
+  </main>
 
-<script>
-// Pretty-print each JSON card by fetching its data-src
-document.querySelectorAll('.code-card').forEach(async card => {
-  const src = card.getAttribute('data-src');
-  const codeEl = card.querySelector('pre > code');
-  try {
-    const res = await fetch(src);
-    const json = await res.json();
-    codeEl.textContent = JSON.stringify(json, null, 2);
-  } catch (e) {
-    // fallback: leave existing content
-    console.warn('Could not load', src, e);
-  }
-});
+  <footer>
+    <div class="container">
+      <p style="text-align: center;">© <span id="year"></span> | SoK: Harpo Framework Artifacts | USENIX Security '26 Submission</p>
+    </div>
+  </footer>
 
-// Copy button
-document.querySelectorAll('.code-card .copy-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const code = btn.closest('.code-card').querySelector('pre > code').textContent;
-    navigator.clipboard.writeText(code);
-    btn.textContent = 'Copied!';
-    setTimeout(() => (btn.textContent = 'Copy'), 1200);
-  });
-});
-</script>
-
-
-    <style>
-    .full-bleed {
-      position: relative;     
-      width: 100%;
-      max-width: 1440px;      
-      margin: 0 auto;           
-      aspect-ratio: 16/9;
-      border: 1px solid #e6e7eb;
-      border-radius: 12px;
-      overflow: hidden;
-      left: auto;           
-      margin-left: 0;
-    }
-    .full-bleed iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      display: block;
-    }
-
-    </style>
-
-    <p style="text-align: justify;">
-       We evaluated all references using this framework. The quantitative results are summarized in the table below and visualized in an interactive 3D plot. The plot was generated with Plotly and customized to highlight the relationship between Privacy, Utility, and Safety for each paper.
-    </p>
-
-   <style>
-  .table-container {
-    max-height: 500px; 
-    overflow-y: auto;  
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 5px;
-  }
-
-  table.metric-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    text-align: center;
-  }
-
-  table.metric-table th {
-    background-color: #eef0f3;
-    font-weight: 600;
-    padding: 10px;
-    border-bottom: 1px solid #d6d8db;
-    position: sticky; 
-    top: 0;         
-    z-index: 2;
-  }
-
-  table.metric-table td {
-    padding: 8px;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
-  table.metric-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  table.metric-table tr:hover {
-    background-color: #f2f6ff;
-  }
-
-  @media (max-width: 800px) {
-    table.metric-table {
-      font-size: 12px;
-    }
-  }
-</style>
-
-  <h4>Evaluation Results for 60 Papers</h4>
-  <div class="table-container">
-  <table class="metric-table">
-    <thead>
-      <tr>
-        <th>Paper</th>
-        <th>Privacy</th>
-        <th>Utility</th>
-        <th>Safety</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>[23]</td><td>0.15</td><td>0.5</td><td>0.75</td></tr>
-      <tr><td>[66]</td><td>0.75</td><td>0.7</td><td>0.75</td></tr>
-      <tr><td>[68]</td><td>0.85</td><td>1</td><td>0.45</td></tr>
-      <tr><td>[24]</td><td>1</td><td>1</td><td>0.6</td></tr>
-      <tr><td>[25]</td><td>1</td><td>1</td><td>0.9</td></tr>
-      <tr><td>[10]</td><td>0.85</td><td>1</td><td>0.9</td></tr>
-      <tr><td>[11]</td><td>0.95</td><td>1</td><td>0.6</td></tr>
-      <tr><td>[12]</td><td>0.85</td><td>1</td><td>0.45</td></tr>
-      <tr><td>[26]</td><td>0.75</td><td>1</td><td>0.5</td></tr>
-      <tr><td>[70]</td><td>1</td><td>1</td><td>0.35</td></tr>
-      <tr><td>[27]</td><td>0.9</td><td>1</td><td>0.65</td></tr>
-      <tr><td>[52]</td><td>0.4</td><td>0</td><td>0.15</td></tr>
-      <tr><td>[63]</td><td>0.8</td><td>1</td><td>0.4</td></tr>
-      <tr><td>[53]</td><td>1</td><td>1</td><td>0.45</td></tr>
-      <tr><td>[64]</td><td>0.95</td><td>1</td><td>0.45</td></tr>
-      <tr><td>[28]</td><td>1</td><td>1</td><td>0.8</td></tr>
-      <tr><td>[29]</td><td>1</td><td>1</td><td>0.6</td></tr>
-      <tr><td>[30]</td><td>1</td><td>1</td><td>0.45</td></tr>
-      <tr><td>[15]</td><td>1</td><td>1</td><td>0.3</td></tr>
-      <tr><td>[31]</td><td>0.9</td><td>1</td><td>0</td></tr>
-      <tr><td>[32]</td><td>0.45</td><td>0.5</td><td>0</td></tr>
-      <tr><td>[54]</td><td>0.95</td><td>0.8</td><td>0.5</td></tr>
-      <tr><td>[33]</td><td>1</td><td>0.8</td><td>0.5</td></tr>
-      <tr><td>[34]</td><td>0.9</td><td>1</td><td>0.1</td></tr>
-      <tr><td>[35]</td><td>0.75</td><td>0.6</td><td>0.1</td></tr>
-      <tr><td>[20]</td><td>0.65</td><td>0.3</td><td>0.3</td></tr>
-      <tr><td>[55]</td><td>0</td><td>0.4</td><td>0.6</td></tr>
-      <tr><td>[56]</td><td>0.7</td><td>0.2</td><td>0.35</td></tr>
-      <tr><td>[36]</td><td>0.95</td><td>1</td><td>0.1</td></tr>
-      <tr><td>[57]</td><td>0.95</td><td>0.8</td><td>0.15</td></tr>
-      <tr><td>[21]</td><td>0.9</td><td>1</td><td>0.1</td></tr>
-      <tr><td>[22]</td><td>0.95</td><td>1</td><td>0.3</td></tr>
-      <tr><td>[37]</td><td>0.9</td><td>0.8</td><td>0.15</td></tr>
-      <tr><td>[69]</td><td>0.95</td><td>1</td><td>0.95</td></tr>
-      <tr><td>[38]</td><td>1</td><td>1</td><td>0.2</td></tr>
-      <tr><td>[39]</td><td>1</td><td>0.6</td><td>0.25</td></tr>
-      <tr><td>[40]</td><td>0.35</td><td>0.3</td><td>0.3</td></tr>
-      <tr><td>[67]</td><td>0.9</td><td>0.8</td><td>0.15</td></tr>
-      <tr><td>[16]</td><td>0.85</td><td>1</td><td>0.2</td></tr>
-      <tr><td>[41]</td><td>1</td><td>1</td><td>0.25</td></tr>
-      <tr><td>[58]</td><td>1</td><td>1</td><td>0</td></tr>
-      <tr><td>[42]</td><td>0.6</td><td>0.6</td><td>0</td></tr>
-      <tr><td>[60]</td><td>1</td><td>1</td><td>0</td></tr>
-      <tr><td>[17]</td><td>0.4</td><td>0.4</td><td>0.3</td></tr>
-      <tr><td>[59]</td><td>0.9</td><td>1</td><td>0.9</td></tr>
-      <tr><td>[43]</td><td>0.35</td><td>0.3</td><td>0.3</td></tr>
-      <tr><td>[44]</td><td>1</td><td>1</td><td>0.85</td></tr>
-      <tr><td>[45]</td><td>1</td><td>1</td><td>0.15</td></tr>
-      <tr><td>[61]</td><td>0.5</td><td>0.8</td><td>0.3</td></tr>
-      <tr><td>[46]</td><td>0.6</td><td>0.4</td><td>0</td></tr>
-      <tr><td>[47]</td><td>0.8</td><td>0.9</td><td>0</td></tr>
-      <tr><td>[62]</td><td>0.15</td><td>0</td><td>0.8</td></tr>
-      <tr><td>[50]</td><td>0.8</td><td>1</td><td>0.55</td></tr>
-      <tr><td>[48]</td><td>0.85</td><td>1</td><td>0.55</td></tr>
-      <tr><td>[65]</td><td>0.7</td><td>1</td><td>0.45</td></tr>
-      <tr><td>[49]</td><td>0</td><td>0.6</td><td>0.7</td></tr>
-    </tbody>
-  </table>
-</div>
-    
-    <h4>3D Plot</h4>
-    <p style="text-align: justify;">
-     We have shown the result of the evaluated framework as a 3D generated with Plotly to highlight the relationship between Privacy, Utility, and Safety for each paper which is shwon in the following plot. The three axes of the graph represent the normalized scores for privacy, utility, and safety. This plot is interactive you can rotate it to view it from all angles, each point represents one of the reviewed article and is labeled with corresponding references number and if you hover over a point, it will display the information for that paper. Articles that have a higher overall score across all three dimensions are displayed in lighter, yellowish colors. In contrast, articles with a lower overall score are marked in darker colors, indicating weakness in one or more dimensions. This color gradient allows for quick and intuitive comparisons between different articles and provides a good indication of the balance or imbalance between the three indicators. Overall, this figure provides a visual summary of the current state of research in the field under consideration. As can be seen from the distribution of points, only a limited number of studies have significant performance in all three indicators, while most papers tend to focus on two main dimensions—usually privacy and efficiency or safety and efficiency and pay less attention to the simultaneous balance between privacy and safety. This observation quantitatively confirms the need for more comprehensive approaches that consider all three dimensions of privacy, safety, and efficiency simultaneously in cyber-physical and autonomous systems.
-    </p>
-
-      <div class="full-bleed">
-        <iframe
-          src="3d.html"
-          loading="lazy">
-        </iframe>
-     </div>
-
-
-  <footer>
-    <div class="container">© <span id="y"></span> 47th IEEE Symposium on Security and Privacy </div>
-  </footer>
-
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>  
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
