@@ -128,7 +128,6 @@
     <div class="container nav">
       <div class="brand"><h1>PoPETs 2026 | Harpo</h1></div>
       <nav class="nav-links">
-        <a href="#tldr">TL;DR</a>
         <a href="#method">Methodology</a>
         <a href="#framework">Framework</a>
         <a href="#results">Results</a>
@@ -141,12 +140,8 @@
   <!-- ============== HERO ============== -->
   <header class="container hero">
     <h2>SoK: A Practical Black-Box Framework for Evaluating Differential Privacy in Cyber-Physical Systems</h2>
-    <div class="subtitle">
-      <span class="badge">Proceedings on Privacy Enhancing Technologies, 2026</span>
-      <span class="badge">SoK</span>
-      <span class="badge">CPS · DP · Privacy · Utility · Safety</span>
-    </div>
-  
+    <h3>Keywords: </h3>
+
     <p>
       We present <strong>Harpo</strong>, a quantitative scoring framework that evaluates how thoroughly
       differential-privacy research in cyber-physical systems (CPS) reports along three dimensions
@@ -180,27 +175,6 @@
   </header>
 
   <main class="container">
-  
-  <!-- ============== TL;DR ============== -->
-  <section id="tldr">
-    <h3>At a Glance</h3>
-    <p class="section-lead">Four numbers that summarize the paper.</p>
-    <div class="findings">
-      <div class="finding-card">
-        <div class="big">47</div>
-        <div class="lbl">Primary CPS-DP research papers scored, drawn from a corpus of 79 reviewed works</div>
-      </div>
-      <div class="finding-card">
-        <div class="big">29</div>
-        <div class="lbl">Of those papers score <strong>zero on Safety</strong> — none of 13 Safety sub-criteria is satisfied</div>
-      </div>
-      <div class="finding-card">
-        <div class="big">ρ ≥ 0.999</div>
-        <div class="lbl">Spearman rank correlation across all three dimensions under ±25% weight perturbation — rankings are
-  essentially invariant to weight choice</div>
-      </div>
-    </div>
-  </section>
 
   <!-- ============== INTRODUCTION ============== -->
   <section id="intro">
@@ -237,7 +211,7 @@
       Each step is grounded in established literature so the framework is reproducible end-to-end.
     </p>
   
-    <h4>Step 1 — Parameter Selection (Hybrid Framework-Grounded Thematic Synthesis)</h4>
+    <h4>Step 1 — Parameter Selection (Thematic Synthesis)</h4>
     <p>
       We picked the sub-criteria in Table 1 through a two-part process. Top-down, we used established
       frameworks as the skeleton: the NIST CPS Framework for the Safety dimension, Dwork's definition
@@ -285,7 +259,7 @@
       tier rules to the same parameter list will reproduce these weights.
     </p>
   
-    <h4>Step 3 — Empirical Robustness (Sensitivity Analysis)</h4>
+    <h4>Step 3 — Sensitivity Analysis</h4>
     <p>
       To verify that the ranking is not an artifact of the weight choice, we re-score every paper
       under two alternative weight schemes — <strong>W2</strong> (each sub-weight multiplied by an
@@ -339,11 +313,7 @@
       cyber-physical or autonomous-systems context; (3) is peer-reviewed or a widely cited arXiv
       preprint; (4) is written in English.</p>
       <p><strong>Exclusion criteria.</strong> We excluded papers that (i) treat DP only in passing
-      without a CPS contribution; (ii) treat CPS without DP; (iii) are duplicate or earlier
-      conference versions of an included journal paper; (iv) are workshop, abstract, or poster-only
-      entries; (v) are not in English.</p>
-      <p><strong>Outcome:</strong> 147 records retrieved → 121 after de-duplication → screening
-      yielded 47 primary research papers + 32 surveys/tutorials = 79 cited works total.</p>
+      without a CPS contribution; (ii) treat CPS without DP;
     </details>
   </section>
   
@@ -356,7 +326,7 @@
     </p>
   
     <figure class="fig">
-      <img src="fig/classification.png" alt="Three-dimensional taxonomy of CPS-DP literature">
+      <img src="classification.png" alt="Three-dimensional taxonomy of CPS-DP literature">
       <figcaption>
         Taxonomy of Differential Privacy in CPS/AS. Blue: type of protected data (locations,
         trajectories, system states, sensor measurements, user data, model parameters, aggregated
@@ -586,36 +556,24 @@
 
   <!-- ============== VISUALIZATION ============== -->
   <section id="viz">
-    <h3>Visualizing the Corpus</h3>
-    <p class="section-lead">
-      The Privacy–Utility–Safety space shows the headline finding directly: most papers are small
-      dark markers (Safety close to zero); only a handful of large yellow markers reach a non-trivial
-      Safety score.
-    </p>
-  
-    <figure class="fig">
-      <img src="fig/scores_bubble.png" alt="2D bubble plot of Privacy, Utility, Safety scores for 47 papers">
-      <figcaption>
-        <strong>Figure 1.</strong> 47-paper corpus projected onto the Privacy–Utility plane. The
-        third dimension (Safety) is encoded redundantly through both marker size and marker color
+    <h4> 2D Visualization</h4>
+    <p>
+      47-paper corpus projected onto the Privacy–Utility plane. The third dimension (Safety) is encoded redundantly through both marker size and marker color
         (viridis colormap: dark = Safety near 0, yellow = Safety near 1). The redundant encoding
         makes Safety perceivable from two independent visual channels, so the headline finding
         remains visible under grayscale printing or colorblind viewing. Papers with identical
-        (P, U, S) scores are plotted as a single marker with a combined reference label.
-      </figcaption>
-    </figure>
-  
-    <figure class="fig">
-      <img src="fig/scores_bubble_hover.png" alt="Hover interaction showing paper scores in tooltip">
-      <figcaption>
-        <strong>Figure 2.</strong> Hover interaction in the interactive version. Hovering over a
+        (P, U, S) scores are plotted as a single marker with a combined reference label. Hovering over a
         marker reveals that paper's reference number and individual Privacy, Utility and Safety
-        scores. The interactive version supports rotation, zooming and per-point inspection in
-        both 2D and 3D, and is provided in the open-source artifact.
-      </figcaption>
-    </figure>
+        scores. 
+    </p>
+    <div class="full-bleed">
+      <iframe src="2d.html" title="2D Visualization of Harpo Scores" loading="lazy"></iframe>
+    </div>
+  </section>
   
-    <h4>Interactive 3D Visualization</h4>
+  
+   <section id="viz">
+    <h4> 3D Visualization</h4>
     <p>
       The full 3D visualization is embedded below. Each point is one paper (or group of papers with
       identical scores); the three axes are Privacy, Utility and Safety; color encodes Safety. Drag
