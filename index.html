@@ -513,16 +513,7 @@
  <section id="examples">
     <h3>Harpo Examples</h3>
     <p class="section-lead">
-      To illustrate how Harpo scores a paper end-to-end, we walk through three worked examples chosen to span the range of
-  Privacy&ndash;Utility&ndash;Safety profiles observed in our corpus.
-      Chen <em>et al.</em> [8] is a balanced exemplar that scores high on all three dimensions and demonstrates what
-  maximum-evidence reporting looks like.
-      Foroughi <em>et al.</em> [18] is a privacy-and-safety heavy example with moderate utility, illustrating how a paper can
-  achieve non-trivial Safety in concert with strong Privacy.
-      Ejazulghaffar <em>et al.</em> [16] is a low-coverage example whose sparse sub-criterion satisfaction places it near the
-  bottom of the corpus.
-      Together these three examples map onto three distinct regions of the 2D plot, connecting the per-paper scoring procedure
-  back to the corpus-level visualization.
+      To illustrate how Harpo scores a paper end-to-end, we walk through two worked examples.
     </p>
   
     <!-- ============== Example 1: Chen et al. ============== -->
@@ -613,9 +604,10 @@
   (P1a&ndash;c&nbsp;&#10003;). The DP guarantees are stated with an explicit privacy parameter &epsilon; and a sensitivity
   analysis that bounds the leakage on shared optimization variables, so formal guarantees are explicitly provided
   (P2&nbsp;&#10003;).</p>
-        <p>The adversary is explicitly modeled as a Bayesian-inference attacker who observes published optimization signals to
-  infer private consumption profiles and the threat is captured mathematically through a posterior-information bound
-  (P3a&ndash;c&nbsp;&#10003;).</p>
+         <p>Adversarial safety is addressed through an inference-resilience analysis: the paper formally
+  models a Bayesian-inference adversary observing noisy coupling variables across optimization iterations and shows that PSDO's
+   adaptive noise injection keeps the adversary's posterior belief (its &ldquo;Chance of Success&rdquo;) low while operational
+  constraints remain satisfied (S3&nbsp;&#10003;).</p>
         <p>Temporal privacy is not formally analyzed: while the optimization runs over repeated rounds, the paper does not
   provide a composition argument bounding the cumulative privacy budget across iterations (P4a&ndash;b not satisfied). The
   mechanism does combine noise injection at multiple stages of the optimization pipeline, which we consider as multi-layer
@@ -645,65 +637,12 @@
   (S3&nbsp;&#10003;).</p>
         <p>Scenario-based safety validation is provided by simulating the prosumer-energy network under attack and noise and
   reporting the resulting violation rates of the operational constraints (S4&nbsp;&#10003;). However, the paper does not model
-  real-time safety properties such as response-time bounds (S5 not satisfied) and no ethical, regulatory or standards-based
+  real-time safety properties (S5 not satisfied) and no ethical, regulatory or standards-based
   safety framework is integrated into the design or evaluation (no score on S6a&ndash;b).</p>
       </details>
     </article>
 
-    <!-- ============== Example 3: Ejazulghaffar et al. ============== -->
-    <article class="example-card">
-      <header class="ex-header">
-        <h4>Ejazulghaffar <em>et&nbsp;al.</em> [16] &mdash; differential privacy in a CPS intrusion-detection pipeline</h4>
-        <div class="ex-scores">
-          <span class="score-badge p">Privacy<br><strong>0.25</strong></span>
-          <span class="score-badge u">Utility<br><strong>0.60</strong></span>
-          <span class="score-badge s">Safety<br><strong>0.45</strong></span>
-        </div>
-      </header>
-      <p class="ex-intro">
-        We analyze a paper that applies DP noise inside a CPS intrusion-detection pipeline as a low-coverage example, in which
-  only a sparse subset of Harpo sub-criteria is satisfied.
-      </p>
-  
-      <details class="ex-dim">
-        <summary><span class="dim-tag p">Privacy</span> 0.25 / 1.00</summary>
-        <p>The paper mentions and briefly describes a DP-style noise mechanism used inside the intrusion-detection pipeline
-  (P1a&nbsp;&#10003;, P1b&nbsp;&#10003;). However, specific implementation details such as noise distribution, sensitivity
-  bound and the precise integration with the detection model are not provided, so P1c is not satisfied.</p>
-        <p>No explicit &epsilon; or formal indistinguishability guarantee is stated, so formal guarantees are absent (P2 not
-  satisfied). The adversary is mentioned at a high level &mdash; an external observer trying to infer information from the IDS
-  outputs &mdash; but neither capabilities nor a mathematical adversary model are provided (P3a&nbsp;&#10003;, P3b&ndash;c not
-  satisfied).</p>
-        <p>Temporal privacy is not analyzed (P4 not satisfied), the mechanism does not combine multiple privacy techniques (P5
-  not satisfied) and only a single data type (network traffic features) is protected (P6 not satisfied).</p>
-      </details>
-  
-      <details class="ex-dim">
-        <summary><span class="dim-tag u">Utility</span> 0.60 / 1.00</summary>
-        <p>The paper reports detection accuracy and false-positive rates as performance metrics under DP noise
-  (U1&nbsp;&#10003;). A non-private baseline detector is identified and compared quantitatively against the noisy version for
-  one privacy setting (U2&nbsp;&#10003;).</p>
-        <p>Robustness is partially examined by sweeping the noise scale and reporting how detection accuracy degrades, which
-  captures the privacy&ndash;utility trade-off at a basic level (U3&nbsp;&#10003;).</p>
-        <p>However, the system is not validated on a real CPS testbed &mdash; only on a precollected dataset (U4 not satisfied)
-   &mdash; and no generalization across additional attack scenarios, datasets or deployment conditions is reported (U5 not
-  satisfied).</p>
-      </details>
-  
-      <details class="ex-dim">
-        <summary><span class="dim-tag s">Safety</span> 0.45 / 1.00</summary>
-        <p>The paper does not perform formal safety verification so gets no score on S1a&ndash;c. Operational safety is
-  addressed through acceptable detection-error bounds &mdash; explicit false-positive and false-negative thresholds that the
-  IDS must respect once DP noise is added (S2&nbsp;&#10003;).</p>
-        <p>Adversarial scenarios are described qualitatively, listing the attack classes the IDS is meant to detect
-  (S3a&nbsp;&#10003;), but resilience under those scenarios is not tested with the DP-noise mechanism enabled (S3b not
-  satisfied). Scenario-based validation is provided on a labeled CPS-attack dataset with results reported under noise
-  (S4&nbsp;&#10003;).</p>
-        <p>Real-time safety modeling is absent (S5 not satisfied) and no ethical, regulatory or standards-based safety
-  framework is integrated into the design or evaluation (no score on S6a&ndash;b).</p>
-      </details>
-    </article>
-  </section>
+    
   <!-- ============== RESULTS ============== -->
   <section id="results"> 
     <h3>Per-Paper Scores</h3>
@@ -718,48 +657,53 @@
           <tr><th>Reference</th><th class="num">Privacy</th><th class="num">Utility</th><th class="num">Safety</th></tr>
         </thead>
         <tbody>
-          <tr><td>[59]</td><td class="num">0.60</td><td class="num">0.90</td><td class="num">0.00</td></tr>
-          <tr><td>[77]</td><td class="num">0.90</td><td class="num">0.80</td><td class="num">0.00</td></tr>
-          <tr><td>[71, 85]</td><td class="num">0.80</td><td class="num">1.00</td><td class="num">0.00</td></tr>
-          <tr><td>[57]</td><td class="num">0.65</td><td class="num">0.60</td><td class="num">0.00</td></tr>
-          <tr><td>[26, 63]</td><td class="num">0.60</td><td class="num">0.40</td><td class="num">0.00</td></tr>
-          <tr><td>[51]</td><td class="num">0.45</td><td class="num">0.70</td><td class="num">0.00</td></tr>
-          <tr><td>[45]</td><td class="num">0.75</td><td class="num">0.70</td><td class="num">0.65</td></tr>
-          <tr><td>[76]</td><td class="num">0.35</td><td class="num">0.20</td><td class="num">0.00</td></tr>
-          <tr><td>[3]</td><td class="num">0.90</td><td class="num">0.70</td><td class="num">0.00</td></tr>
-          <tr><td>[36]</td><td class="num">0.10</td><td class="num">0.20</td><td class="num">0.00</td></tr>
-          <tr><td>[12]</td><td class="num">0.90</td><td class="num">0.40</td><td class="num">0.50</td></tr>
-          <tr><td>[89]</td><td class="num">0.50</td><td class="num">0.80</td><td class="num">0.00</td></tr>
-          <tr><td>[53]</td><td class="num">0.55</td><td class="num">0.40</td><td class="num">0.00</td></tr>
-          <tr><td>[46, 72]</td><td class="num">0.75</td><td class="num">0.90</td><td class="num">0.00</td></tr>
-          <tr><td>[17]</td><td class="num">0.70</td><td class="num">0.80</td><td class="num">0.00</td></tr>
-          <tr><td>[44]</td><td class="num">0.65</td><td class="num">0.60</td><td class="num">0.45</td></tr>
-          <tr><td>[28]</td><td class="num">0.95</td><td class="num">0.80</td><td class="num">0.50</td></tr>
-          <tr><td>[83]</td><td class="num">0.85</td><td class="num">0.60</td><td class="num">0.80</td></tr>
-          <tr><td>[68]</td><td class="num">0.75</td><td class="num">0.60</td><td class="num">0.40</td></tr>
-          <tr><td>[52]</td><td class="num">0.50</td><td class="num">0.40</td><td class="num">0.00</td></tr>
-          <tr><td>[18]</td><td class="num">0.90</td><td class="num">0.80</td><td class="num">0.50</td></tr>
-          <tr><td>[21]</td><td class="num">0.95</td><td class="num">0.40</td><td class="num">0.75</td></tr>
-          <tr><td>[24]</td><td class="num">0.85</td><td class="num">0.50</td><td class="num">0.60</td></tr>
-          <tr><td>[55]</td><td class="num">0.70</td><td class="num">0.40</td><td class="num">0.50</td></tr>
-          <tr><td>[42]</td><td class="num">0.70</td><td class="num">0.40</td><td class="num">0.00</td></tr>
-          <tr><td>[84]</td><td class="num">0.55</td><td class="num">0.40</td><td class="num">0.25</td></tr>
-          <tr><td>[86]</td><td class="num">0.65</td><td class="num">0.70</td><td class="num">0.00</td></tr>
-          <tr><td>[78]</td><td class="num">0.80</td><td class="num">0.60</td><td class="num">0.30</td></tr>
-          <tr><td>[74]</td><td class="num">0.65</td><td class="num">0.40</td><td class="num">0.00</td></tr>
-          <tr><td>[80]</td><td class="num">0.10</td><td class="num">0.10</td><td class="num">0.00</td></tr>
-          <tr><td>[38, 69, 87]</td><td class="num">0.65</td><td class="num">0.20</td><td class="num">0.00</td></tr>
-          <tr><td>[88]</td><td class="num">0.30</td><td class="num">0.70</td><td class="num">0.00</td></tr>
-          <tr><td>[20]</td><td class="num">0.40</td><td class="num">0.50</td><td class="num">0.00</td></tr>
-          <tr><td>[48]</td><td class="num">0.45</td><td class="num">0.20</td><td class="num">0.00</td></tr>
-          <tr><td>[4]</td><td class="num">0.35</td><td class="num">0.40</td><td class="num">0.20</td></tr>
-          <tr><td>[43]</td><td class="num">0.90</td><td class="num">0.40</td><td class="num">0.75</td></tr>
-          <tr><td>[81]</td><td class="num">0.35</td><td class="num">0.40</td><td class="num">0.35</td></tr>
-          <tr><td>[37]</td><td class="num">0.75</td><td class="num">0.90</td><td class="num">0.45</td></tr>
-          <tr><td>[8]</td><td class="num">0.80</td><td class="num">1.00</td><td class="num">0.60</td></tr>
-          <tr><td>[79]</td><td class="num">0.70</td><td class="num">0.70</td><td class="num">0.00</td></tr>
-          <tr><td>[39]</td><td class="num">0.85</td><td class="num">0.60</td><td class="num">0.00</td></tr>
-          <tr><td>[16]</td><td class="num">0.25</td><td class="num">0.60</td><td class="num">0.45</td></tr>
+           <tr><td>Ren et al.</td><td class="num">0.60</td><td class="num">0.90</td><td class="num">0.00</td></tr>
+           <tr><td>Yao et al.</td><td class="num">0.90</td><td class="num">0.80</td><td class="num">0.00</td></tr>
+           <tr><td>Zhang et al.</td><td class="num">0.80</td><td class="num">1.00</td><td class="num">0.00</td></tr>
+           <tr><td>Ramasubramanian et al.</td><td class="num">0.65</td><td class="num">0.60</td><td class="num">0.00</td></tr>
+           <tr><td>Hale et al.</td><td class="num">0.60</td><td class="num">0.40</td><td class="num">0.00</td></tr>
+           <tr><td>Nandanwar et al.</td><td class="num">0.45</td><td class="num">0.70</td><td class="num">0.00</td></tr>
+           <tr><td>Liu et al.</td><td class="num">0.75</td><td class="num">0.70</td><td class="num">0.65</td></tr>
+           <tr><td>Yao et al.</td><td class="num">0.35</td><td class="num">0.20</td><td class="num">0.00</td></tr>
+           <tr><td>Avula et al.</td><td class="num">0.90</td><td class="num">0.70</td><td class="num">0.00</td></tr>
+           <tr><td>Kumar et al.</td><td class="num">0.10</td><td class="num">0.20</td><td class="num">0.00</td></tr>
+           <tr><td>Degue et al.</td><td class="num">0.90</td><td class="num">0.40</td><td class="num">0.50</td></tr>
+           <tr><td>Zhu et al.</td><td class="num">0.50</td><td class="num">0.80</td><td class="num">0.00</td></tr>
+           <tr><td>Olowononi et al.</td><td class="num">0.55</td><td class="num">0.40</td><td class="num">0.00</td></tr>
+           <tr><td>Liu et al.</td><td class="num">0.75</td><td class="num">0.90</td><td class="num">0.00</td></tr>
+           <tr><td>Fan et al.</td><td class="num">0.70</td><td class="num">0.80</td><td class="num">0.00</td></tr>
+           <tr><td>Lin et al.</td><td class="num">0.65</td><td class="num">0.60</td><td class="num">0.45</td></tr>
+           <tr><td>Hossain et al.</td><td class="num">0.95</td><td class="num">0.80</td><td class="num">0.50</td></tr>
+           <tr><td>Zhai et al.</td><td class="num">0.85</td><td class="num">0.60</td><td class="num">0.80</td></tr>
+           <tr><td>Wang et al.</td><td class="num">0.75</td><td class="num">0.60</td><td class="num">0.40</td></tr>
+           <tr><td>Nasir et al.</td><td class="num">0.50</td><td class="num">0.40</td><td class="num">0.00</td></tr>
+           <tr><td>Foroughi et al.</td><td class="num">0.90</td><td class="num">0.80</td><td class="num">0.50</td></tr>
+           <tr><td>Xiong et al.</td><td class="num">0.80</td><td class="num">1.00</td><td class="num">0.00</td></tr>
+           <tr><td>Xue et al.</td><td class="num">0.75</td><td class="num">0.90</td><td class="num">0.00</td></tr>
+           <tr><td>Zhang et al.</td><td class="num">0.65</td><td class="num">0.20</td><td class="num">0.00</td></tr>
+           <tr><td>Giraldo et al.</td><td class="num">0.95</td><td class="num">0.40</td><td class="num">0.75</td></tr>
+           <tr><td>Goyal et al.</td><td class="num">0.85</td><td class="num">0.50</td><td class="num">0.60</td></tr>
+           <tr><td>Qi et al.</td><td class="num">0.70</td><td class="num">0.40</td><td class="num">0.50</td></tr>
+           <tr><td>Li et al.</td><td class="num">0.70</td><td class="num">0.40</td><td class="num">0.00</td></tr>
+           <tr><td>Zhang et al.</td><td class="num">0.55</td><td class="num">0.40</td><td class="num">0.25</td></tr>
+           <tr><td>Zhang et al.</td><td class="num">0.65</td><td class="num">0.70</td><td class="num">0.00</td></tr>
+           <tr><td>Yazdani et al.</td><td class="num">0.80</td><td class="num">0.60</td><td class="num">0.30</td></tr>
+           <tr><td>Yan et al.</td><td class="num">0.65</td><td class="num">0.40</td><td class="num">0.00</td></tr>
+           <tr><td>Yogi et al.</td><td class="num">0.10</td><td class="num">0.10</td><td class="num">0.00</td></tr>
+           <tr><td>Wang et al.</td><td class="num">0.65</td><td class="num">0.20</td><td class="num">0.00</td></tr>
+           <tr><td>Zhu et al.</td><td class="num">0.30</td><td class="num">0.70</td><td class="num">0.00</td></tr>
+           <tr><td>Gati et al.</td><td class="num">0.40</td><td class="num">0.50</td><td class="num">0.00</td></tr>
+           <tr><td>Lu et al.</td><td class="num">0.45</td><td class="num">0.20</td><td class="num">0.00</td></tr>
+           <tr><td>Bhattacharjee et al.</td><td class="num">0.35</td><td class="num">0.40</td><td class="num">0.20</td></tr>
+           <tr><td>Li et al.</td><td class="num">0.90</td><td class="num">0.40</td><td class="num">0.75</td></tr>
+           <tr><td>Yogi et al.</td><td class="num">0.35</td><td class="num">0.40</td><td class="num">0.35</td></tr>
+           <tr><td>Kumar et al.</td><td class="num">0.75</td><td class="num">0.90</td><td class="num">0.45</td></tr>
+           <tr><td>Chen et al.</td><td class="num">0.80</td><td class="num">1.00</td><td class="num">0.60</td></tr>
+           <tr><td>Ye et al.</td><td class="num">0.70</td><td class="num">0.70</td><td class="num">0.00</td></tr>
+           <tr><td>Le Ny et al.</td><td class="num">0.85</td><td class="num">0.60</td><td class="num">0.00</td></tr>
+           <tr><td>Ejazulghaffar et al.</td><td class="num">0.25</td><td class="num">0.60</td><td class="num">0.45</td></tr>
+           <tr><td>Sun et al.</td><td class="num">0.60</td><td class="num">0.40</td><td class="num">0.00</td></tr>
+           <tr><td>Ny et al.</td><td class="num">0.65</td><td class="num">0.20</td><td class="num">0.00</td></tr>
         </tbody>
       </table>
     </div>
