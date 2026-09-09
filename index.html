@@ -359,68 +359,103 @@
       A Python evaluator that reads two JSON files and outputs three scores.
     </p>
     <p>
-      Harpo takes two JSON inputs: <code>paper.json</code> (a paper-specific Boolean checklist filled
-      by the evaluator) and <code>weight.json</code> (the fixed per-criterion weights, identical
-      across all papers). For every sub-criterion marked <code>true</code>, the corresponding weight
-      is added to the total. The output is three normalized scores in [0, 1] — one per dimension.
+     The main algorithm is a python-based evaluation that executed inside the Harpo.
+     It takes two JSON files as input: 1)<code>weight.json</code>: a predefined JSON file containing fixed weights for all evaluation factors, designed by us.
+     and 2) <code>paper.json</code>: a customizable JSON file filled by the evaluator, indicating which factors are true/false by the target paper.
+     It compares the evaluator’s inputs with the weight file. For every factor marked as true, its corresponding weight is added to the total score.
+     The sum is a value between 0 and 1 representing the final scores for privacy, utility and safety the outputs of the black box.
     </p>
   
     <div class="code-grid">
       <figure class="code-card">
         <figcaption><strong>paper.json (example)</strong><button class="copy-btn" type="button">Copy</button></figcaption>
         <pre><code>{
-    "Privacy": {
-      "P1a": true,  "P1b": true,  "P1c": true,
-      "P2":  true,
-      "P3a": true,  "P3b": true,  "P3c": true,
-      "P4a": true,  "P4b": true,
-      "P5":  true,
-      "P6":  false
-    },
-    "Utility": {
-      "U1a": true,  "U1b": true,
-      "U2a": true,  "U2b": true,
-      "U3a": true,  "U3b": true,
-      "U4a": true,  "U4b": true,
-      "U5a": true,  "U5b": true
-    },
-    "Safety": {
-      "S1a": false, "S1b": false, "S1c": false,
-      "S2a": true,  "S2b": true,
-      "S3a": true,  "S3b": true,
-      "S4a": true,  "S4b": true,
-      "S5a": true,  "S5b": true,
-      "S6a": false, "S6b": false
-    }
+          "Privacy": {
+            "P1a: Privacy Mechanism, Mention of Mechanism": true,
+            "P1b: Privacy Mechanism, Mechanism Description": true,
+            "P1c: Privacy Mechanism, Evidence or Implementation": true,
+            "P2: Formal Guarantees (Explicit parameters)": false,
+            "P3a: Attacker Modeling, Mention of Adversary": true,
+            "P3b: Attacker Modeling, Capabilities Defined": true,
+            "P3c: Attacker Modeling, Formal Modeling / Mathematical Representation": false,
+            "P4a: Temporal Privacy, Mention of Temporal Aspects": false,
+            "P4b: Temporal Privacy, Composition Formally Analyzed": false,
+            "P5: Hybrid or Multi-Layer Privacy": true,
+            "P6: Data Coverage (trajectory, control, ID, etc.)": true
+          },
+          "Utility": {
+            "U1a: Accuracy Reporting, Mention of Metrics": false,
+            "U1b: Accuracy Reporting, Results Provided": true,
+            "U2a: Baseline Comparison, Baseline Identification": false,
+            "U2b: Baseline Comparison, Quantitative Comparison": false,
+            "U3a: Robustness Analysis, Test Scenarios Defined": true,
+            "U3b: Robustness Analysis, Results Analyzed": true,
+            "U4a: Real-System Validation, System Description": true,
+            "U4b: Real-System Validation, Validation Evidence": true,
+            "U5a: Generalization, Multiple Scenarios/Datasets": true,
+            "U5b: Generalization, Generalization Results": true
+          },
+          "Safety": {
+            "S1a: Formal Safety Verification, Method Mention": true,
+            "S1b: Formal Safety Verification, Application Described": true,
+            "S1c: Formal Safety Verification, Results Provided": true,
+            "S2a: Safety Constraints, Constraints Defined": false,
+            "S2b: Safety Constraints, Integration Shown": false,
+            "S3a: Adversarial Safety Resilience, Adversarial Scenarios": true,
+            "S3b: Adversarial Safety Resilience, Resilience Tested": false,
+            "S4a: Scenario-Based Validation, Scenarios Described": true,
+            "S4b: Scenario-Based Validation, Validation Results": true,
+            "S5a: Real-Time Safety Modeling, RT Modeling": true,
+            "S5b: Real-Time Safety Modeling, Scalability & Physical Link": false,
+            "S6a: Ethics Regulatory Safety Integration, Explicit Compliance/Ethics Modeling with Safety Linkage": true,
+            "S6b: Ethics Regulatory Safety Integration, Link to Safety": true
+          }
   }</code></pre>
       </figure>
   
       <figure class="code-card">
         <figcaption><strong>weight.json (fixed across all papers)</strong><button class="copy-btn" 
-  type="button">Copy</button></figcaption>
+         type="button">Copy</button></figcaption>
         <pre><code>{
-    "Privacy": {
-      "P1a": 0.10, "P1b": 0.10, "P1c": 0.10,
-      "P2":  0.10,
-      "P3a": 0.05, "P3b": 0.10, "P3c": 0.05,
-      "P4a": 0.05, "P4b": 0.05,
-      "P5":  0.10,
-      "P6":  0.20
-    },
-    "Utility": {
-      "U1a": 0.10, "U1b": 0.10,
-      "U2a": 0.10, "U2b": 0.10,
-      "U3a": 0.10, "U3b": 0.10,
-      "U4a": 0.10, "U4b": 0.10,
-      "U5a": 0.10, "U5b": 0.10
-    },
-    "Safety": {
-      "S1a": 0.10, "S1b": 0.10, "S1c": 0.10,
-      "S2a": 0.10, "S2b": 0.05,
-      "S3a": 0.10, "S3b": 0.05,
-      "S4a": 0.10, "S4b": 0.10,
-      "S5a": 0.05, "S5b": 0.05,
-      "S6a": 0.05, "S6b": 0.05
+           "Privacy": {
+             "P1a: Privacy Mechanism, Mention of Mechanism": 0.1,
+             "P1b: Privacy Mechanism, Mechanism Description": 0.1,
+             "P1c: Privacy Mechanism, Evidence or Implementation": 0.1,
+             "P2: Formal Guarantees (Explicit parameters)": 0.1,
+             "P3a: Attacker Modeling, Mention of Adversary": 0.05,
+             "P3b: Attacker Modeling, Capabilities Defined": 0.1,
+             "P3c: Attacker Modeling, Formal Modeling / Mathematical Representation": 0.05,
+             "P4a: Temporal Privacy, Mention of Temporal Aspects": 0.05,
+             "P4b: Temporal Privacy, Composition Formally Analyzed": 0.05,
+             "P5: Hybrid or Multi-Layer Privacy": 0.1,
+             "P6: Data Coverage (trajectory, control, ID, etc.)": 0.2
+           },
+           "Utility": {
+             "U1a: Accuracy Reporting, Mention of Metrics": 0.1,
+             "U1b: Accuracy Reporting, Results Provided": 0.1,
+             "U2a: Baseline Comparison, Baseline Identification": 0.1,
+             "U2b: Baseline Comparison, Quantitative Comparison": 0.1,
+             "U3a: Robustness Analysis, Test Scenarios Defined": 0.1,
+             "U3b: Robustness Analysis, Results Analyzed": 0.1,
+             "U4a: Real-System Validation, System Description": 0.1,
+             "U4b: Real-System Validation, Validation Evidence": 0.1,
+             "U5a: Generalization, Multiple Scenarios/Datasets": 0.1,
+             "U5b: Generalization, Generalization Results": 0.1
+           },
+           "Safety": {
+             "S1a: Formal Safety Verification, Method Mention": 0.1,
+             "S1b: Formal Safety Verification, Application Described": 0.1,
+             "S1c: Formal Safety Verification, Results Provided": 0.1,
+             "S2a: Safety Constraints, Constraints Defined": 0.1,
+             "S2b: Safety Constraints, Integration Shown": 0.05,
+             "S3a: Adversarial Safety Resilience, Adversarial Scenarios": 0.1,
+             "S3b: Adversarial Safety Resilience, Resilience Tested": 0.05,
+             "S4a: Scenario-Based Validation, Scenarios Described": 0.1,
+             "S4b: Scenario-Based Validation, Validation Results": 0.1,
+             "S5a: Real-Time Safety Modeling, RT Modeling": 0.05,
+             "S5b: Real-Time Safety Modeling, Scalability & Physical Link": 0.05,
+             "S6a: Ethics Regulatory Safety Integration, Explicit Compliance/Ethics Modeling with Safety Linkage": 0.05,
+             "S6b: Ethics Regulatory Safety Integration, Link to Safety": 0.05
     }
   }</code></pre>
       </figure>
